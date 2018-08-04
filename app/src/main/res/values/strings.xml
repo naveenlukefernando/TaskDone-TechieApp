@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">TaskDone</string>
+
+
+    <string name="app_splash">TaskDone</string>
+    <string name="version">0.1 Beta</string>
+</resources>
