@@ -4,7 +4,10 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
+    <color name="white">#ffffff</color>
+
     <color name="splash_screen">#2c3e50</color>
+    <color name="main">#2c3e50</color>
     <color name="splash_screen_text">#ffffff</color>
     <color name="version">#616161</color>
 
