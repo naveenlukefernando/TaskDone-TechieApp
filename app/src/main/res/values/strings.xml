@@ -5,7 +5,8 @@
     <string name="app_splash">TaskDone</string>
     <string name="version">0.1 Beta</string>
 
-
-
     <string name="welcome_text">Welcome!</string>
+
+    <string name="register_topic">Fill out quick details below to create your account.</string>
+    <string name="headtopic">Create account</string>
 </resources>

@@ -6,9 +6,24 @@
 
     <color name="white">#ffffff</color>
 
+    <color name="log_btn">#c0392b</color>
+    <color name="reg_btn">#27ae60</color>
+
+    <color name="btn_pressed">#2f3640</color>
+    <color name="btn_not_pressed_reg">#7f8fa6</color>
+
+
+    <color name="rippleEffectColor">#f816a463</color>
+
     <color name="splash_screen">#2c3e50</color>
     <color name="main">#2c3e50</color>
     <color name="splash_screen_text">#ffffff</color>
+
     <color name="version">#616161</color>
+
+    <color name="grey">#616161</color>
+
+
+    <color name="btnSignIn">#1fbad6</color>
 
 </resources>
