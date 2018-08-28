@@ -96,6 +96,8 @@ public class activity_Welcome extends FragmentActivity implements OnMapReadyCall
 
                 if (isOnline) {
 
+                    FirebaseDatabase.getInstance().goOnline();
+
                     if (ActivityCompat.checkSelfPermission(activity_Welcome.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                             ActivityCompat.checkSelfPermission(activity_Welcome.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
@@ -111,9 +113,14 @@ public class activity_Welcome extends FragmentActivity implements OnMapReadyCall
 
                 } else {
 
+                    FirebaseDatabase.getInstance().goOffline();
+
                     fusedLocationProviderClient.removeLocationUpdates(locationCallback);
 
+
                     mCurrent.remove();
+                    mMap.clear();
+
                     Toast.makeText(activity_Welcome.this, "You are Offline", Toast.LENGTH_SHORT).show();
 
 
@@ -250,10 +257,7 @@ public class activity_Welcome extends FragmentActivity implements OnMapReadyCall
 
                             //Animation draw to location
                             rotateMaker(mCurrent, -360, mMap);
-                            {
 
-
-                            }
                         }
 
 
@@ -306,21 +310,26 @@ public class activity_Welcome extends FragmentActivity implements OnMapReadyCall
     @Override
     public void onMapReady(GoogleMap googleMap) {
            mMap = googleMap;
-//            Marker marker_new;
 
 
+
+            displayLocation();
 
         mCurrent = mMap.addMarker(new MarkerOptions()
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.worker_pin_man_marker))
-                    .position(new LatLng(6.914789, 79.973159))
+                    .position(new LatLng(0, 0))
                     .title("You"));
 
 
             // map camera movement
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(6.914789, 79.973159), 15.0f));
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(0, 0), 1.0f));
 
             //Animation draw to location
             rotateMaker(mCurrent, -360, mMap);
+
+                mMap.clear();
+
+
 
 
 
