@@ -26,4 +26,12 @@
 
     <color name="btnSignIn">#1fbad6</color>
 
+
+    ////map design
+
+    <color name="baseReleaseColor">#212121</color>
+    <color name="basePressColor">#FAFAFA</color>
+    <color name="ballRelease_Color">#9E9E9E</color>
+
+
 </resources>

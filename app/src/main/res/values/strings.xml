@@ -1,12 +1,13 @@
 <resources>
-    <string name="app_name">TaskDone</string>
+    <string name="app_name">TaskDone-Techie</string>
 
 
     <string name="app_splash">TaskDone</string>
     <string name="version">0.1 Beta</string>
 
-    <string name="welcome_text">Welcome!</string>
+    <string name="welcome_text">Welcome Techie!</string>
 
     <string name="register_topic">Fill out quick details below to create your account.</string>
     <string name="headtopic">Create account</string>
+    <string name="title_activity__welcome">Map</string>
 </resources>
