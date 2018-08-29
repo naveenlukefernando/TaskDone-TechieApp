@@ -1,42 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/map"
-    android:name="com.google.android.gms.maps.SupportMapFragment"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".activity_Welcome">
+
 
     <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
+
         <LinearLayout
+            android:id="@+id/layoutpanel"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:weightSum="10"
-            android:padding="16dp">
+            android:layout_height="wrap_content">
 
-            <com.github.glomadrian.materialanimatedswitch.MaterialAnimatedSwitch
-                android:id="@+id/location_switch"
-                android:layout_width="0dp"
+
+
+
+            <EditText
+                android:id="@+id/edtPlace"
+                android:hint="@string/editTextBox_Client_location"
+                android:layout_margin="10dp"
+                android:layout_weight="5"
+                android:layout_marginLeft="100dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="3"
-                app:icon_release = "@drawable/ic_location_off"
-                app:icon_press = "@drawable/ic_location_on"
-                app:base_release_color = "@color/baseReleaseColor"
-                app:base_press_color = "@color/basePressColor"
-                app:ball_release_color = "@color/ballRelease_Color"
-                app:ball_press_color = "@color/white"
+                tools:ignore="HardcodedText" />
 
+            <Button
+                android:id="@+id/btnGo"
+                android:text="GO"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 />
-
-
 
         </LinearLayout>
 
+    <fragment
+        android:layout_below="@id/layoutpanel"
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".activity_Welcome"/>
 
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="500dp"
+        android:weightSum="10"
+        android:padding="16dp">
+
+        <com.github.glomadrian.materialanimatedswitch.MaterialAnimatedSwitch
+            android:id="@+id/location_switch"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:paddingTop="500dp"
+            app:ball_press_color="@color/white"
+            app:ball_release_color="@color/ballRelease_Color"
+            app:base_press_color="@color/basePressColor"
+            app:base_release_color="@color/baseReleaseColor"
+            app:icon_press="@drawable/ic_location_on"
+            app:icon_release="@drawable/ic_location_off"
+
+            />
+
+
+
+    </LinearLayout>
 
 
 
@@ -45,6 +80,7 @@
 
 
 
-</fragment>
+
+
 
 
