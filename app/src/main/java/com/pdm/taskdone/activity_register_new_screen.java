@@ -1,14 +1,11 @@
 package com.pdm.taskdone;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -19,7 +16,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.pdm.taskdone.Model.User;
+import com.pdm.taskdone.Common.Common;
+import com.pdm.taskdone.Model.User_worker;
 
 public class activity_register_new_screen extends AppCompatActivity {
 
@@ -41,7 +39,7 @@ public class activity_register_new_screen extends AppCompatActivity {
         //initilaize firebase
         firebaseAuth = FirebaseAuth.getInstance();
         f_database = FirebaseDatabase.getInstance();
-        users = f_database.getReference("Users");
+        users = f_database.getReference(Common.user_worker);
 
         //button
          reg_done_btn= findViewById(R.id.reg_done_btn);
@@ -81,11 +79,11 @@ public class activity_register_new_screen extends AppCompatActivity {
                         public void onSuccess(AuthResult authResult) {
 
                             //save user to firebase db
-                            User user = new User();
-                            user.setFname(name.getText().toString());
+                            User_worker user = new User_worker();
+                            user.setName(name.getText().toString());
                             user.setEmail(email.getText().toString());
                             user.setPassword(password.getText().toString());
-                            user.setPhone_num(phone.getText().toString());
+                            user.setPhone(phone.getText().toString());
 
                             Toast.makeText(activity_register_new_screen.this, "Loading..",
                                     Toast.LENGTH_SHORT).show();
@@ -97,7 +95,7 @@ public class activity_register_new_screen extends AppCompatActivity {
                                     Toast.makeText(activity_register_new_screen.this, "Registered Succesfully.",
                                             Toast.LENGTH_LONG).show();
 
-                                    startActivity(new Intent(activity_register_new_screen.this,activity_Welcome.class));
+                                    startActivity(new Intent(activity_register_new_screen.this,activity_maps_main.class));
                                     finish();
                                 }
                             })

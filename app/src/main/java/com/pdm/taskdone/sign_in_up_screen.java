@@ -1,20 +1,14 @@
 package com.pdm.taskdone;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -23,9 +17,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.pdm.taskdone.Model.User;
-
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.V;
+import com.pdm.taskdone.Common.Common;
 
 public class sign_in_up_screen extends AppCompatActivity {
 
@@ -46,7 +38,7 @@ public class sign_in_up_screen extends AppCompatActivity {
         //initilaize firebase
         firebaseAuth = FirebaseAuth.getInstance();
         f_database = FirebaseDatabase.getInstance();
-        users = f_database.getReference("Users");
+        users = f_database.getReference(Common.user_worker);
 
         // buttin initlization
          register_btn = (Button) (findViewById(R.id.reg_btn));
@@ -80,7 +72,7 @@ public class sign_in_up_screen extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
-                        startActivity(new Intent(sign_in_up_screen.this,activity_Welcome.class));
+                        startActivity(new Intent(sign_in_up_screen.this,activity_maps_main.class));
                         finish();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
