@@ -22,5 +22,7 @@ public class MyFirebaseMessaging extends FirebaseMessagingService{
 
         startActivity(intent);
 
+
+
     }
 }
