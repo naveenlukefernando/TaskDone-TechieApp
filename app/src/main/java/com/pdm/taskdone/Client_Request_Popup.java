@@ -152,4 +152,23 @@ public class Client_Request_Popup extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onStop() {
+        mediaPlayer.release();
+        super.onStop();
+        }
+
+
+    @Override
+    protected void onPause() {
+        mediaPlayer.release();
+        super.onPause();
+    }
+
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        mediaPlayer.start();
+    }
 }
