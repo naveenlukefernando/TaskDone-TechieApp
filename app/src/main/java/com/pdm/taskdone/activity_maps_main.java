@@ -66,6 +66,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.pdm.taskdone.Common.Common.mLastlocation;
+
 public class activity_maps_main extends AppCompatActivity implements OnMapReadyCallback
 
 {
@@ -85,11 +87,13 @@ public class activity_maps_main extends AppCompatActivity implements OnMapReadyC
 
     private LocationRequest mlocationRequest;
     private GoogleApiClient mgoogleApiClient;
-    private Location mLastlocation;
+
 
     private static int UPDATE_INTERVAL = 5000;
     private static int FATEST_INTERVAL = 3000;
     private static int DISPLACEMENT = 10;
+
+
 
     DatabaseReference workers;
     GeoFire mGeoFire;
