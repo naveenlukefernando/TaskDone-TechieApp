@@ -9,6 +9,11 @@
     <color name="log_btn">#c0392b</color>
     <color name="reg_btn">#27ae60</color>
 
+    <color name="accept">#2980b9</color>
+    <color name="decline">#e74c3c</color>
+    <color name="popup_screen_req">#182C61</color>
+
+
     <color name="red">#c0392b</color>
 
     <color name="btn_pressed">#2f3640</color>

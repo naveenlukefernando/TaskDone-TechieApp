@@ -6,8 +6,11 @@ import android.media.MediaPlayer;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 import android.view.animation.LinearInterpolator;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +24,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.maps.model.SquareCap;
 import com.pdm.taskdone.Common.Common;
+import com.pdm.taskdone.Model.FCMResponse;
+import com.pdm.taskdone.Model.Notification;
+import com.pdm.taskdone.Model.Sender;
+import com.pdm.taskdone.Model.Token;
 import com.pdm.taskdone.Remote.IFCMService;
 import com.pdm.taskdone.Remote.IGoogleAPI;
 
@@ -39,8 +46,13 @@ public class Client_Request_Popup extends AppCompatActivity {
 
     TextView txttime,txtAdress,txtDistance;
     MediaPlayer mediaPlayer ;
+    Button acceptBtn, declineBtn;
 
     IGoogleAPI mService;
+    IFCMService miFCMService;
+
+
+    String clientID;
 
 
     @Override
@@ -49,6 +61,7 @@ public class Client_Request_Popup extends AppCompatActivity {
         setContentView(R.layout.activity_client__request__popup);
 
         mService = Common.getGoogleAPI();
+        miFCMService = Common.getIFCMService()
 
         //InitView
 
@@ -56,6 +69,23 @@ public class Client_Request_Popup extends AppCompatActivity {
         txtAdress = (TextView)findViewById(R.id.txtAddress);
         txttime = (TextView)findViewById(R.id.txtTime);
         txtDistance = (TextView)findViewById(R.id.txt_Distance);
+
+        acceptBtn = (Button) findViewById(R.id.accept_btn);
+        declineBtn = (Button)findViewById(R.id.decline_btn);
+
+        declineBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (!TextUtils.isEmpty(clientID))
+                    cancelRequest (clientID);
+            }
+        });
+
+
+
+
+
 
 
         mediaPlayer = MediaPlayer.create(this,R.raw.ringtone);
@@ -67,9 +97,39 @@ public class Client_Request_Popup extends AppCompatActivity {
             double lat = getIntent().getDoubleExtra("lat",-1.0);
             double lng = getIntent().getDoubleExtra("lng",-1.0);
 
+            clientID = getIntent().getStringExtra("Client");
+
+
             getDirection(lat,lng);
 
         }
+
+
+    }
+
+    private void cancelRequest(String clientID) {
+
+        Token token = new Token(clientID);
+
+        Notification notification = new Notification("Notice","Worker has cancelled your request.");
+        Sender sender = new Sender(token.getToken(),notification);
+
+      miFCMService.sendMessage(sender)
+              .enqueue(new Callback<FCMResponse>() {
+                  @Override
+                  public void onResponse(Call<FCMResponse> call, Response<FCMResponse> response) {
+                      if (response.body().success == 1)
+                      {
+                          Toast.makeText(Client_Request_Popup.this,"Cancelled",Toast.LENGTH_SHORT).show();
+                          finish();
+                      }
+                  }
+
+                  @Override
+                  public void onFailure(Call<FCMResponse> call, Throwable t) {
+
+                  }
+              });
 
 
     }
