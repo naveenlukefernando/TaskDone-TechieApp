@@ -50,9 +50,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.pdm.taskdone.Common.Common;
+import com.pdm.taskdone.Model.Token;
 import com.pdm.taskdone.Remote.IGoogleAPI;
 
 import org.json.JSONArray;
@@ -293,6 +295,20 @@ public class activity_maps_main extends AppCompatActivity implements OnMapReadyC
 
         mService = com.pdm.taskdone.Common.Common.getGoogleAPI();
 
+        updateFirebaseToken();
+
+
+
+    }
+
+    private void updateFirebaseToken() {
+
+        FirebaseDatabase db = FirebaseDatabase.getInstance();
+        DatabaseReference tokens = db.getReference(Common.token_table);
+
+            Token token = new Token(FirebaseInstanceId.getInstance().getToken());
+        tokens.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .setValue(token);
 
     }
 

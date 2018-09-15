@@ -9,21 +9,20 @@
     tools:context=".sign_in_up_screen">
 
 
-
     <!--<android.support.constraint.ConstraintLayout-->
-        <!--android:layout_width="309dp"-->
-        <!--android:layout_height="491dp"-->
-        <!--android:layout_marginBottom="38dp"-->
-        <!--android:layout_marginEnd="26dp"-->
-        <!--android:layout_marginLeft="25dp"-->
-        <!--android:layout_marginRight="26dp"-->
-        <!--android:layout_marginStart="25dp"-->
-        <!--android:layout_marginTop="38dp"-->
-        <!--android:background="#757575"-->
-        <!--app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--app:layout_constraintEnd_toEndOf="parent"-->
-        <!--app:layout_constraintStart_toStartOf="parent"-->
-        <!--app:layout_constraintTop_toTopOf="parent">-->
+    <!--android:layout_width="309dp"-->
+    <!--android:layout_height="491dp"-->
+    <!--android:layout_marginBottom="38dp"-->
+    <!--android:layout_marginEnd="26dp"-->
+    <!--android:layout_marginLeft="25dp"-->
+    <!--android:layout_marginRight="26dp"-->
+    <!--android:layout_marginStart="25dp"-->
+    <!--android:layout_marginTop="38dp"-->
+    <!--android:background="#757575"-->
+    <!--app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--app:layout_constraintEnd_toEndOf="parent"-->
+    <!--app:layout_constraintStart_toStartOf="parent"-->
+    <!--app:layout_constraintTop_toTopOf="parent">-->
 
     <!--</android.support.constraint.ConstraintLayout>-->
 
@@ -122,8 +121,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="E-mail"
-                android:textColor="@color/white"
                 android:inputType="textEmailAddress"
+                android:textColor="@color/white"
 
                 android:textSize="14sp">
 
@@ -155,8 +154,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Password"
-                android:textColor="@color/white"
                 android:inputType="textPassword"
+                android:textColor="@color/white"
 
                 android:textSize="14sp">
 
@@ -193,8 +192,8 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:background="@drawable/button_login"
-            android:text="Login"
             android:onClick="log_click"
+            android:text="Login"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

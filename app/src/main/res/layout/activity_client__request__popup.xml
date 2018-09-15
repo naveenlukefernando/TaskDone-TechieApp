@@ -8,16 +8,20 @@
     tools:context=".Client_Request_Popup">
 
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/map_image_request"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_centerInParent="true"
-        android:src="@drawable/map"
-        app:civ_border_width="5dp"
-        app:civ_border_color="@android:color/holo_green_dark"
+    <!--<de.hdodenhof.circleimageview.CircleImageView-->
+        <!--android:id="@+id/map_image_request"-->
+        <!--android:layout_width="200dp"-->
+        <!--android:layout_height="200dp"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_marginTop="145dp"-->
 
-        />
+        <!--android:src="@drawable/map"-->
+        <!--app:civ_border_color="@android:color/holo_green_dark"-->
+        <!--app:civ_border_width="5dp" />-->
+
+
+
 
     <LinearLayout
         android:id="@+id/map_Image_layout"
@@ -27,6 +31,21 @@
         android:layout_marginTop="16dp"
 
         >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/Alert"
+            android:textColor="@color/white"
+            android:textSize="40sp"
+            android:textAlignment="center"
+            />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="296dp"
+            app:srcCompat="@mipmap/icon_pp_back_no" />
 
         <TextView
             android:id="@+id/txtTime"
@@ -65,5 +84,7 @@
 
 
     </LinearLayout>
+
+
 
 </RelativeLayout>

@@ -78,10 +78,6 @@ public class Client_Request_Popup extends AppCompatActivity {
     private void getDirection(double lat,double lng) {
 
 
-
-
-
-
         String requestApi = null;
 
         try {

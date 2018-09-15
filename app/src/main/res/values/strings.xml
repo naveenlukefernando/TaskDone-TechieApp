@@ -12,6 +12,11 @@
     <string name="title_activity__welcome">Map</string>
     <string name="editTextBox_Client_location">Enter the Client Location</string>
 
+    <string name="Alert">Client Alert!</string>
+
 
     <string name="google_direction_api">AIzaSyCBzQ-83bRBZBPrjtrPdlNzGkBhMUvQUhQ</string>
+
+
+
 </resources>

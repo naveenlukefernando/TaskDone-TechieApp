@@ -19,7 +19,7 @@ public interface IFCMService {
 
     })
     @POST("fcm/send")
-    Call<FCMResponse> sendMessage (@Body Sender body);
+    Call<IFCMService> sendMessage (@Body Sender body);
 
 
 
