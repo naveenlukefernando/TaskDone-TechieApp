@@ -61,7 +61,7 @@ public class Client_Request_Popup extends AppCompatActivity {
         setContentView(R.layout.activity_client__request__popup);
 
         mService = Common.getGoogleAPI();
-        miFCMService = Common.getIFCMService()
+        miFCMService = Common.getIFCMService();
 
         //InitView
 
@@ -77,6 +77,7 @@ public class Client_Request_Popup extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                Log.d("clicked","Canceeledd!!!!");
                 if (!TextUtils.isEmpty(clientID))
                     cancelRequest (clientID);
             }
@@ -97,7 +98,7 @@ public class Client_Request_Popup extends AppCompatActivity {
             double lat = getIntent().getDoubleExtra("lat",-1.0);
             double lng = getIntent().getDoubleExtra("lng",-1.0);
 
-            clientID = getIntent().getStringExtra("Client");
+            clientID = getIntent().getStringExtra("client");
 
 
             getDirection(lat,lng);
