@@ -47,9 +47,11 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.maps.model.SquareCap;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -121,6 +123,11 @@ public class activity_maps_main extends AppCompatActivity implements OnMapReadyC
     private Polyline blackPolyline, greyPolyline;
 
     private IGoogleAPI mService;
+
+    //presence system
+    DatabaseReference onlineUserRef,currentUserRef;
+
+
 
     Runnable drawPathRunnable = new Runnable() {
         @Override
@@ -202,6 +209,28 @@ public class activity_maps_main extends AppCompatActivity implements OnMapReadyC
         mapFragment.getMapAsync(this);
 
 
+        //Presence system (user can get online or offline )
+        onlineUserRef = FirebaseDatabase.getInstance().getReference().child(".info/connected");
+        currentUserRef = FirebaseDatabase.getInstance().getReference(Common.worker_location_GPS)
+                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+        onlineUserRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                //remvong values from worker table when worker goes offline
+                currentUserRef.onDisconnect().removeValue();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+
         //init firebase storage
         firebaseStorage = FirebaseStorage.getInstance();
         storageReference = firebaseStorage.getReference();
@@ -216,6 +245,8 @@ public class activity_maps_main extends AppCompatActivity implements OnMapReadyC
             public void onCheckedChanged(boolean isOnline) {
 
                 if (isOnline) {
+
+
 
                    FirebaseDatabase.getInstance().goOnline(); // set Online
 
