@@ -40,7 +40,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.42000002" />
+        app:layout_constraintVertical_bias="0.51" />
 
     <ImageView
         android:id="@+id/imageView2"
@@ -65,17 +65,16 @@
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
 
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="8dp"
         android:textAlignment="center"
         android:textColor="@android:color/white"
         android:textSize="24sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/txt_Distance"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/txt_Distance"
@@ -105,7 +104,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
 
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="12dp"
         android:textAlignment="center"
         android:textColor="@android:color/white"
         android:textSize="18sp"
@@ -128,14 +127,15 @@
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtAddress"
-        app:layout_constraintVertical_bias="0.468">
+        app:layout_constraintVertical_bias="0.591">
 
         <Button
             android:id="@+id/accept_btn"
-            android:layout_width="127dp"
-            android:layout_height="42dp"
+            android:layout_width="130dp"
+            android:layout_height="50dp"
             android:layout_marginLeft="10dp"
             android:background="@drawable/button_accept"
             android:text="Accept"
@@ -144,11 +144,11 @@
 
         <Button
             android:id="@+id/decline_btn"
-            android:layout_width="127dp"
-            android:layout_height="44dp"
+            android:layout_width="130dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
             android:background="@drawable/button_decline"
             android:text="Decline"
-            android:layout_marginLeft="10dp"
             android:textSize="10dp" />
 
     </LinearLayout>
