@@ -16,7 +16,7 @@
 
 
     <string name="google_direction_api">AIzaSyCBzQ-83bRBZBPrjtrPdlNzGkBhMUvQUhQ</string>
-
+    <string name="title_activity_worker_tracking">Map</string>
 
 
 </resources>
