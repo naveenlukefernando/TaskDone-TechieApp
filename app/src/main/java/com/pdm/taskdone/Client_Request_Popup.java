@@ -1,6 +1,7 @@
 package com.pdm.taskdone;
 
 import android.animation.ValueAnimator;
+import android.content.Intent;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Handler;
@@ -51,6 +52,7 @@ public class Client_Request_Popup extends AppCompatActivity {
     IGoogleAPI mService;
     IFCMService miFCMService;
 
+    double lat,lng;
 
     String clientID;
 
@@ -83,7 +85,20 @@ public class Client_Request_Popup extends AppCompatActivity {
             }
         });
 
+        acceptBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Client_Request_Popup.this,worker_tracking.class);
 
+                Log.d("Hey","Accepted");
+                // send client location to new activity
+                intent.putExtra("lat",lat);
+                intent.putExtra("lng",lng);
+
+                startActivity(intent);
+                finish();
+            }
+        });
 
 
 
@@ -95,8 +110,8 @@ public class Client_Request_Popup extends AppCompatActivity {
 
         if (getIntent() != null)
         {
-            double lat = getIntent().getDoubleExtra("lat",-1.0);
-            double lng = getIntent().getDoubleExtra("lng",-1.0);
+             lat = getIntent().getDoubleExtra("lat",-1.0);
+             lng = getIntent().getDoubleExtra("lng",-1.0);
 
             clientID = getIntent().getStringExtra("client");
 

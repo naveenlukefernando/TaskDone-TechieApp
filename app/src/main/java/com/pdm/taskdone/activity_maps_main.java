@@ -240,6 +240,8 @@ public class activity_maps_main extends AppCompatActivity implements OnMapReadyC
         //init map
 
         location_switch = (MaterialAnimatedSwitch) findViewById(R.id.location_switch);
+
+
         location_switch.setOnCheckedChangeListener(new MaterialAnimatedSwitch.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(boolean isOnline) {
@@ -524,6 +526,9 @@ public class activity_maps_main extends AppCompatActivity implements OnMapReadyC
 
     private void setUplocation() {
 
+
+        Log.d("SETUPLOCATION","naveeennnnnnn");
+
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             //request runtime permission
@@ -550,6 +555,8 @@ public class activity_maps_main extends AppCompatActivity implements OnMapReadyC
 
     private void buildLocationCallBack() {
 
+
+        Log.d("success","BUILD LOCATION CAALL BACK");
         locationCallback = new com.google.android.gms.location.LocationCallback() {
             @Override
             public void onLocationResult(LocationResult locationResult) {
@@ -566,6 +573,8 @@ public class activity_maps_main extends AppCompatActivity implements OnMapReadyC
     @SuppressLint("RestrictedApi")
     private void buildLocationRequest() {
 
+        Log.d("buildlocation_request","Build success");
+
         mlocationRequest = new LocationRequest();
         mlocationRequest.setInterval(UPDATE_INTERVAL);
         mlocationRequest.setFastestInterval(FATEST_INTERVAL);
@@ -573,16 +582,21 @@ public class activity_maps_main extends AppCompatActivity implements OnMapReadyC
         mlocationRequest.setSmallestDisplacement(DISPLACEMENT);
 
 
+
+
     }
 
 
     private void displayLocation() {
+
+
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
 
+        Log.d("Display","displayLocation  is good");
         fusedLocationProviderClient.getLastLocation()
                 .addOnSuccessListener(new OnSuccessListener<Location>() {
                     @Override
@@ -706,13 +720,17 @@ public class activity_maps_main extends AppCompatActivity implements OnMapReadyC
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
+            Log.d("UPDATE 1 ON MAP","UPDATEING IN MAP");
+
             return;
         }
+
+        Log.d("BUILDLOCATION 2 CALLING","CALLINGGGGGGGGGG1233445");
 
         buildLocationRequest();
         buildLocationCallBack();
 
-//        displayLocation();
+
 
         fusedLocationProviderClient.requestLocationUpdates(mlocationRequest, locationCallback, Looper.myLooper());
 
