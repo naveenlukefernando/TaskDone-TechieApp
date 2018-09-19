@@ -94,6 +94,7 @@ public class Client_Request_Popup extends AppCompatActivity {
                 // send client location to new activity
                 intent.putExtra("lat",lat);
                 intent.putExtra("lng",lng);
+                intent.putExtra("clientID",clientID);
 
                 startActivity(intent);
                 finish();
@@ -127,7 +128,7 @@ public class Client_Request_Popup extends AppCompatActivity {
 
         Token token = new Token(clientID);
 
-        Notification notification = new Notification("Notice","Worker has cancelled your request.");
+        Notification notification = new Notification("Cancel","Worker has cancelled your request.");
         Sender sender = new Sender(token.getToken(),notification);
 
       miFCMService.sendMessage(sender)

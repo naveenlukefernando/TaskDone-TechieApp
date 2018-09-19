@@ -19,6 +19,8 @@ import android.widget.Toast;
 
 import com.firebase.geofire.GeoFire;
 import com.firebase.geofire.GeoLocation;
+import com.firebase.geofire.GeoQuery;
+import com.firebase.geofire.GeoQueryEventListener;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationRequest;
@@ -49,6 +51,11 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.pdm.taskdone.Common.Common;
 import com.pdm.taskdone.Helper.DirectionsJSONParser;
+import com.pdm.taskdone.Model.FCMResponse;
+import com.pdm.taskdone.Model.Notification;
+import com.pdm.taskdone.Model.Sender;
+import com.pdm.taskdone.Model.Token;
+import com.pdm.taskdone.Remote.IFCMService;
 import com.pdm.taskdone.Remote.IGoogleAPI;
 
 import org.json.JSONArray;
@@ -71,6 +78,8 @@ public class worker_tracking extends FragmentActivity implements OnMapReadyCallb
 
     double client_Lat,client_Lng;
 
+    String clientID;
+
 
     //play services init
     private static final int MY_PERMISSION_REQUEST_CODE = 7000;
@@ -88,6 +97,9 @@ public class worker_tracking extends FragmentActivity implements OnMapReadyCallb
     GeoFire mGeoFire;
 
     IGoogleAPI mService;
+    IFCMService mFCMService;
+
+    GeoFire geoFire;
 
     private Circle client_Marker ;
     private Marker worker_Marker;
@@ -115,10 +127,12 @@ public class worker_tracking extends FragmentActivity implements OnMapReadyCallb
         {
             client_Lat = getIntent().getDoubleExtra("lat",-1.0);
             client_Lng = getIntent().getDoubleExtra("lng",-1.0);
+            clientID = getIntent().getStringExtra("clientID");
 
         }
 
         mService = Common.getGoogleAPI();
+        mFCMService = Common.getIFCMService();
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
@@ -320,10 +334,45 @@ public class worker_tracking extends FragmentActivity implements OnMapReadyCallb
 
         client_Marker = mMap.addCircle(new CircleOptions()
         .center(new LatLng(client_Lat,client_Lng))
-        .radius(10)
+        .radius(50) // => radius is 50m
         .strokeColor(Color.BLUE)
         .fillColor(0x220000FF)
         .strokeWidth(5.0f));
+
+
+        //Create GeoFensing with radius is 50m
+        geoFire = new GeoFire(FirebaseDatabase.getInstance().getReference(Common.worker_location_GPS));
+        GeoQuery geoQuery = geoFire.queryAtLocation(new GeoLocation(client_Lat,client_Lng),0.05f);
+
+        geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
+            @Override
+            public void onKeyEntered(String key, GeoLocation location) {
+                // we need client id to send notification
+                // so , we will pass from previous activuty
+                sendArrivedNotification (clientID);
+            }
+
+            @Override
+            public void onKeyExited(String key) {
+
+            }
+
+            @Override
+            public void onKeyMoved(String key, GeoLocation location) {
+
+            }
+
+            @Override
+            public void onGeoQueryReady() {
+
+            }
+
+            @Override
+            public void onGeoQueryError(DatabaseError error) {
+
+            }
+        });
+
 
 
 
@@ -343,6 +392,32 @@ public class worker_tracking extends FragmentActivity implements OnMapReadyCallb
 
         fusedLocationProviderClient.requestLocationUpdates(mlocationRequest, locationCallback, Looper.myLooper());
 
+
+
+    }
+
+    private void sendArrivedNotification(String clientID) {
+
+        Log.d("Send notification","sent sent ");
+        Token token = new Token(clientID);
+        // send notification with title is arrived and body is string
+        Notification notification = new Notification("Arrived",String.format("The worker %s has arrived to your location",Common.currentUser.getName()));
+        Sender sender = new Sender(token.getToken(),notification);
+
+        mFCMService.sendMessage(sender).enqueue(new Callback<FCMResponse>() {
+            @Override
+            public void onResponse(Call<FCMResponse> call, Response<FCMResponse> response) {
+                if (response.body().success != 1)
+                {
+                    Toast.makeText(worker_tracking.this,"Failed",Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<FCMResponse> call, Throwable t) {
+
+            }
+        });
 
 
     }
