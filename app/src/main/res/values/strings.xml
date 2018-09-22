@@ -9,6 +9,11 @@
 
     <string name="register_topic">Fill out quick details below to create your account.</string>
     <string name="headtopic">Create account</string>
+
+    <string name="top_Head">Let"'"s Work</string>
+
+
+
     <string name="title_activity__welcome">Map</string>
     <string name="editTextBox_Client_location">Enter the Client Location</string>
 

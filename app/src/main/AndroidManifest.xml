@@ -62,7 +62,8 @@
         <activity android:name=".Client_Request_Popup" />
         <activity
             android:name=".worker_tracking"
-            android:label="@string/title_activity_worker_tracking"></activity>
+            android:label="@string/title_activity_worker_tracking" />
+        <activity android:name=".activity_register_top_screen"></activity>
     </application>
 
 </manifest>

@@ -401,7 +401,7 @@ public class worker_tracking extends FragmentActivity implements OnMapReadyCallb
         Log.d("Send notification","sent sent ");
         Token token = new Token(clientID);
         // send notification with title is arrived and body is string
-        Notification notification = new Notification("Arrived",String.format("The worker %s has arrived to your location",Common.currentUser.getName()));
+        Notification notification = new Notification("Arrived",String.format("The worker %s has arrived at  your location.",Common.currentUser.getName()));
         Sender sender = new Sender(token.getToken(),notification);
 
         mFCMService.sendMessage(sender).enqueue(new Callback<FCMResponse>() {

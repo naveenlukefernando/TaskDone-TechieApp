@@ -10,7 +10,7 @@ public class User_worker {
     public User_worker() {
     }
 
-    public User_worker(String email, String password, String name, String lname, String phone) {
+    public User_worker(String email, String password, String name, String phone) {
         this.email = email;
         this.password = password;
         this.name = name;
