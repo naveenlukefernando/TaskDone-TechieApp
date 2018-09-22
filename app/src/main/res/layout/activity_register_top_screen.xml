@@ -25,6 +25,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView5">
 
         <TextView
+            android:id="@+id/text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Choose your location"
@@ -40,24 +41,55 @@
             android:layout_width="match_parent"
             android:layout_marginTop="50dp"
             android:layout_height="wrap_content"
+            app:ms_baseColor="@color/white"
             app:ms_arrowColor="#0000FF"
             app:ms_arrowSize="16dp"
-            app:ms_floatingLabelText="Choose"
             app:ms_hint="Please Choose"
-           app:ms_hintColor="#000000"
+            app:ms_hintColor="#000000"
+            app:ms_floatingLabelColor="#A9A9A9"
+            app:ms_floatingLabelText="Select"
             app:ms_multiline="true"
 
             >
 
-
-
         </fr.ganfra.materialspinner.MaterialSpinner>
+
+
+
+        <android.support.design.widget.TextInputLayout
+
+            android:id="@+id/textInput_Layer_NIC"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30sp"
+            app:errorEnabled="true"
+            app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/nic_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="NIC Number"
+                android:textColorHint="@color/white"
+                android:textColor="@color/white"
+                android:inputType="phone"
+                android:textSize="14sp">
+
+
+            </android.support.design.widget.TextInputEditText>
+
+
+        </android.support.design.widget.TextInputLayout>
+
         
 
     </LinearLayout>
 
     <Button
-        android:id="@+id/reg_done_btn"
+        android:id="@+id/continue_btn"
         android:layout_width="127dp"
         android:layout_height="42dp"
         android:layout_marginBottom="8dp"
@@ -66,7 +98,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:background="@drawable/button_register"
-        android:text="Register"
+        android:text="Continue"
         android:textSize="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

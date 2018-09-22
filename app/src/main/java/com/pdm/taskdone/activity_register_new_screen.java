@@ -30,6 +30,8 @@ public class activity_register_new_screen extends AppCompatActivity {
     private TextInputEditText name,email,phone,password,re_password;
     private TextInputLayout name_lay,email_lay,phone_lay,password_lay,re_password_lay;
 
+    String nic,city;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +42,11 @@ public class activity_register_new_screen extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         f_database = FirebaseDatabase.getInstance();
         users = f_database.getReference(Common.user_worker);
+
+        //getting data from previous screen
+         nic = getIntent().getExtras().getString("nic");
+         city = getIntent().getExtras().getString("city");
+
 
         //button
          reg_done_btn= findViewById(R.id.reg_done_btn);
@@ -57,6 +64,7 @@ public class activity_register_new_screen extends AppCompatActivity {
                 phone_lay = findViewById(R.id.textInput_Layer_Phone_number);
                 password_lay = findViewById(R.id.textInput_Layer_password);
                 re_password_lay = findViewById(R.id.Textinput_Layer_retype_password);
+
 
 
 
@@ -80,6 +88,8 @@ public class activity_register_new_screen extends AppCompatActivity {
 
                             //save user to firebase db
                             User_worker user = new User_worker();
+                            user.setNIC(nic);
+                            user.setCity(city);
                             user.setName(name.getText().toString());
                             user.setEmail(email.getText().toString());
                             user.setPassword(password.getText().toString());

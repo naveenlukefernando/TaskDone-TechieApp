@@ -56,7 +56,6 @@ public class sign_in_up_screen extends AppCompatActivity {
 
 
 
-
     }
 
 
@@ -108,7 +107,7 @@ public class sign_in_up_screen extends AppCompatActivity {
 
     public void register_click (View v)
     {
-        startActivity(new Intent(sign_in_up_screen.this,activity_register_new_screen.class));
+        startActivity(new Intent(sign_in_up_screen.this,activity_register_top_screen.class));
         finish();
 
     }
