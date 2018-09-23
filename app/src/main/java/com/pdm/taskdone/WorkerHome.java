@@ -6,14 +6,24 @@ import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.Toast;
@@ -72,9 +82,9 @@ import retrofit2.Response;
 
 import static com.pdm.taskdone.Common.Common.mLastlocation;
 
-public class activity_maps_main extends AppCompatActivity implements OnMapReadyCallback
+public class WorkerHome extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener , OnMapReadyCallback {
 
-{
 
     private GoogleMap mMap;
 
@@ -116,7 +126,7 @@ public class activity_maps_main extends AppCompatActivity implements OnMapReadyC
     private Handler handler;
     private LatLng startPosition, endPosition, currentPosition;
     private int index, next;
-//    private Button btnGo;
+    //    private Button btnGo;
     private PlaceAutocompleteFragment places;
     private String destination;
     private PolylineOptions polylineOptions, blackPolylineOptions;
@@ -177,6 +187,8 @@ public class activity_maps_main extends AppCompatActivity implements OnMapReadyC
         }
     };
 
+
+
     private float getBearing(LatLng startPosition, LatLng endPosition) {
 
         double lat = Math.abs(startPosition.latitude - endPosition.latitude);
@@ -199,11 +211,30 @@ public class activity_maps_main extends AppCompatActivity implements OnMapReadyC
     }
 
 
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_maps);
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        setContentView(R.layout.activity_worker_home);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+
+
+        //INITIZAIZE
+
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -212,7 +243,7 @@ public class activity_maps_main extends AppCompatActivity implements OnMapReadyC
         //Presence system (user can get online or offline )
         onlineUserRef = FirebaseDatabase.getInstance().getReference().child(".info/connected");
         currentUserRef = FirebaseDatabase.getInstance().getReference(Common.worker_location_GPS)
-                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
         onlineUserRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -250,11 +281,11 @@ public class activity_maps_main extends AppCompatActivity implements OnMapReadyC
 
 
 
-                   FirebaseDatabase.getInstance().goOnline(); // set Online
+                    FirebaseDatabase.getInstance().goOnline(); // set Online
 
-                    if (ActivityCompat.checkSelfPermission(activity_maps_main.this,
+                    if (ActivityCompat.checkSelfPermission(WorkerHome.this,
                             Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                            ActivityCompat.checkSelfPermission(activity_maps_main.this,
+                            ActivityCompat.checkSelfPermission(WorkerHome.this,
                                     Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
                         return;
@@ -265,7 +296,7 @@ public class activity_maps_main extends AppCompatActivity implements OnMapReadyC
 
                     fusedLocationProviderClient.requestLocationUpdates(mlocationRequest, locationCallback, Looper.myLooper());
                     displayLocation();
-                    Toast.makeText(activity_maps_main.this, "You are Online", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(WorkerHome.this, "You are Online", Toast.LENGTH_SHORT).show();
 
                 } else {
 
@@ -279,7 +310,7 @@ public class activity_maps_main extends AppCompatActivity implements OnMapReadyC
 
                     if(handler != null)
                         handler.removeCallbacks(drawPathRunnable);
-                    Toast.makeText(activity_maps_main.this, "You are Offline", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(WorkerHome.this, "You are Offline", Toast.LENGTH_SHORT).show();
 
 
                 }
@@ -304,14 +335,14 @@ public class activity_maps_main extends AppCompatActivity implements OnMapReadyC
                     getDirection();
                 }else
                 {
-                    Toast.makeText(activity_maps_main.this,"Please change your status to ONLINE.",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(WorkerHome.this,"Please change your status to ONLINE.",Toast.LENGTH_SHORT).show();
 
                 }
             }
 
             @Override
             public void onError(Status status) {
-                    Toast.makeText(activity_maps_main.this,""+ status.toString(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(WorkerHome.this,""+ status.toString(),Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -334,16 +365,19 @@ public class activity_maps_main extends AppCompatActivity implements OnMapReadyC
 
     }
 
+ /// METHODS
+
     private void updateFirebaseToken() {
 
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         DatabaseReference tokens = db.getReference(Common.token_table);
 
-            Token token = new Token(FirebaseInstanceId.getInstance().getToken());
+        Token token = new Token(FirebaseInstanceId.getInstance().getToken());
         tokens.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .setValue(token);
 
     }
+
 
     private void getDirection() {
 
@@ -457,7 +491,7 @@ public class activity_maps_main extends AppCompatActivity implements OnMapReadyC
 
                         @Override
                         public void onFailure(Call<String> call, Throwable t) {
-                            Toast.makeText(activity_maps_main.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(WorkerHome.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
 
                         }
                     });
@@ -541,7 +575,7 @@ public class activity_maps_main extends AppCompatActivity implements OnMapReadyC
         } else
 
             buildLocationRequest();
-            buildLocationCallBack();
+        buildLocationCallBack();
 
 
         {
@@ -649,6 +683,7 @@ public class activity_maps_main extends AppCompatActivity implements OnMapReadyC
 
     }
 
+
     private void rotateMaker(final Marker mCurrent, final float i, GoogleMap mMap) {
 
         final Handler handler = new Handler();
@@ -673,17 +708,6 @@ public class activity_maps_main extends AppCompatActivity implements OnMapReadyC
     }
 
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
-
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -696,8 +720,8 @@ public class activity_maps_main extends AppCompatActivity implements OnMapReadyC
 
 
 
-                mCurrent = mMap.addMarker(new MarkerOptions()
-               // .icon(BitmapDescriptorFactory.fromResource(R.drawable.worker_pin_man_marker))
+        mCurrent = mMap.addMarker(new MarkerOptions()
+                // .icon(BitmapDescriptorFactory.fromResource(R.drawable.worker_pin_man_marker))
                 .position(new LatLng(0,0))
                 .title(""));
 
@@ -752,4 +776,64 @@ public class activity_maps_main extends AppCompatActivity implements OnMapReadyC
 
 
 
+
+
+
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.worker_home, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_camera) {
+            // Handle the camera action
+        } else if (id == R.id.nav_gallery) {
+
+        } else if (id == R.id.nav_slideshow) {
+
+        } else if (id == R.id.nav_manage) {
+
+        } else if (id == R.id.nav_share) {
+
+        } else if (id == R.id.nav_send) {
+
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
 }

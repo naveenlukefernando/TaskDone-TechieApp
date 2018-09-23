@@ -90,7 +90,7 @@ public class sign_in_up_screen extends AppCompatActivity {
                                    }
                                });
 
-                        startActivity(new Intent(sign_in_up_screen.this,activity_maps_main.class));
+                        startActivity(new Intent(sign_in_up_screen.this,WorkerHome.class));
                         finish();
                     }
                 }).addOnFailureListener(new OnFailureListener() {

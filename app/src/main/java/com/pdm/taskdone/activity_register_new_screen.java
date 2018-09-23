@@ -152,7 +152,7 @@ public class activity_register_new_screen extends AppCompatActivity {
                                     Toast.makeText(activity_register_new_screen.this, "Registered Succesfully.",
                                             Toast.LENGTH_LONG).show();
 
-                                    startActivity(new Intent(activity_register_new_screen.this,activity_maps_main.class));
+                                    startActivity(new Intent(activity_register_new_screen.this,WorkerHome.class));
                                     finish();
                                 }
                             })

@@ -56,14 +56,15 @@
             </intent-filter>
         </service>
 
-        <activity
-            android:name=".activity_maps_main"
-            android:label="@string/title_activity__welcome" />
         <activity android:name=".Client_Request_Popup" />
         <activity
             android:name=".worker_tracking"
             android:label="@string/title_activity_worker_tracking" />
-        <activity android:name=".activity_register_top_screen"></activity>
+        <activity android:name=".activity_register_top_screen" />
+        <activity
+            android:name=".WorkerHome"
+            android:label="@string/title_activity_worker_home"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
