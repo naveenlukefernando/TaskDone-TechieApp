@@ -6,7 +6,10 @@ import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -19,6 +22,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.pdm.taskdone.Common.Common;
 import com.pdm.taskdone.Model.User_worker;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import fr.ganfra.materialspinner.MaterialSpinner;
+
 public class activity_register_new_screen extends AppCompatActivity {
 
 
@@ -26,11 +35,16 @@ public class activity_register_new_screen extends AppCompatActivity {
     FirebaseDatabase f_database;
     DatabaseReference users;
 
-    private Button reg_done_btn;
-    private TextInputEditText name,email,phone,password,re_password;
-    private TextInputLayout name_lay,email_lay,phone_lay,password_lay,re_password_lay;
+    MaterialSpinner spinner;
+    List<String> professionistItems = new ArrayList<>();
+    ArrayAdapter <String> adapter;
 
-    String nic,city;
+
+    private Button reg_done_btn;
+    private TextInputEditText email,phone,password,re_password;
+    private TextInputLayout email_lay,phone_lay,password_lay,re_password_lay;
+
+    String nic,city,name,pro_Pic_url,selected_profession;
 
 
     @Override
@@ -46,20 +60,20 @@ public class activity_register_new_screen extends AppCompatActivity {
         //getting data from previous screen
          nic = getIntent().getExtras().getString("nic");
          city = getIntent().getExtras().getString("city");
-
+         name = getIntent().getExtras().getString("name");
 
         //button
          reg_done_btn= findViewById(R.id.reg_done_btn);
 
          //ini text_input_fields
-        name = findViewById(R.id.first_name);
+
         email = findViewById(R.id.e_mail_text);
         phone = findViewById(R.id.text_phone_number);
         password = findViewById(R.id.password_text);
         re_password = findViewById(R.id.retype_password_textbox);
 
         //ini text_lay
-                name_lay = findViewById(R.id.textInput_Layer_Name);
+
                 email_lay = findViewById(R.id.textInput_Layer_Email);
                 phone_lay = findViewById(R.id.textInput_Layer_Phone_number);
                 password_lay = findViewById(R.id.textInput_Layer_password);
@@ -67,13 +81,42 @@ public class activity_register_new_screen extends AppCompatActivity {
 
 
 
+        initItems();
+
+        spinner = (MaterialSpinner) findViewById(R.id.spinner_profession);
+        adapter = new ArrayAdapter<String>(this ,R.layout.support_simple_spinner_dropdown_item,professionistItems);
+        adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+
+                if (position != -1) // plese choose will notify
+                {
+
+                    selected_profession =spinner.getItemAtPosition(position).toString();
+
+                    Log.d("Clicked",selected_profession);
+
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
 
     }
 
 
     public void  reg_done_click (View v){
 
-        if(!ValidateName () |!validateEmail () | !validatePhone () |  !validatePassword () | !validate_Re_Password ()) {
+        if(!validateEmail () | !validatePhone () |  !validatePassword () | !validate_Re_Password ()) {
             return;
         }
 
@@ -86,11 +129,15 @@ public class activity_register_new_screen extends AppCompatActivity {
                         @Override
                         public void onSuccess(AuthResult authResult) {
 
+                            pro_Pic_url = "https://firebasestorage.googleapis.com/v0/b/taskdone-8edf1.appspot.com/o/default_user_pro.jpg?alt=media&token=e5a670a0-4512-40fa-995c-f9dfaa512c8b";
+
                             //save user to firebase db
                             User_worker user = new User_worker();
                             user.setNIC(nic);
+                            user.setProfession(selected_profession);
+                            user.setPro_pic_URL(pro_Pic_url);
                             user.setCity(city);
-                            user.setName(name.getText().toString());
+                            user.setName(name);
                             user.setEmail(email.getText().toString());
                             user.setPassword(password.getText().toString());
                             user.setPhone(phone.getText().toString());
@@ -136,21 +183,7 @@ public class activity_register_new_screen extends AppCompatActivity {
 
     //validation
 
-    private boolean ValidateName ()
-    {
-        String name = name_lay.getEditText().getText().toString().trim();
 
-        if(name.isEmpty()){
-            name_lay.setError("Field can't be Empty.");
-            return false;
-        }
-
-        {
-            name_lay.setError(null);
-            return true;
-        }
-
-    }
 
     private boolean validateEmail ()
     {
@@ -216,6 +249,23 @@ public class activity_register_new_screen extends AppCompatActivity {
         return true;
     }
 
+    private void initItems() {
 
+
+        String[] profession = {"Electrician","A/C Technician","Carpenters","Painters","Welding"};
+
+
+
+        ArrayList<String> aList = new ArrayList<String>(Arrays.asList(profession));
+        professionistItems.addAll(aList);
+
+
+    }
 
 }
+
+
+
+
+
+

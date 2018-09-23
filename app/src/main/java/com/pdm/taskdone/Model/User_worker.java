@@ -10,17 +10,21 @@ public class User_worker {
     private String phone;
     private String city;
     private String NIC;
+    private String profession;
+    private String pro_pic_URL;
 
     public User_worker() {
     }
 
-    public User_worker(String email, String password, String name, String phone , String city ,String NIC) {
+    public User_worker(String email, String password, String name, String phone , String city ,String NIC,String pro_pic_URL, String profession) {
         this.email = email;
         this.password = password;
         this.name = name;
         this.phone = phone;
         this.city = city;
         this.NIC = NIC;
+        this.profession = profession;
+        this.pro_pic_URL = pro_pic_URL;
     }
 
     public String getEmail() {
@@ -70,5 +74,22 @@ public class User_worker {
 
     public void setNIC(String NIC) {
         this.NIC = NIC;
+    }
+
+
+    public String getProfession() {
+        return profession;
+    }
+
+    public void setProfession(String profession) {
+        this.profession = profession;
+    }
+
+    public String getPro_pic_URL() {
+        return pro_pic_URL;
+    }
+
+    public void setPro_pic_URL(String pro_pic_URL) {
+        this.pro_pic_URL = pro_pic_URL;
     }
 }
