@@ -907,6 +907,9 @@ public class WorkerHome extends AppCompatActivity
 
     }
 
+
+    //new propic update method
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
