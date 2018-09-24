@@ -86,7 +86,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.pdm.taskdone.Common.Common;
 import com.pdm.taskdone.Model.Token;
 import com.pdm.taskdone.Remote.IGoogleAPI;
@@ -916,12 +918,57 @@ public class WorkerHome extends AppCompatActivity
 
             if (saveUri != null)
             {
-                ProgressDialog mDialog = new ProgressDialog(this);
+                final ProgressDialog mDialog = new ProgressDialog(this);
                 mDialog.setMessage("Uploading");
                  mDialog.show();
 
                 String imagename = UUID.randomUUID().toString(); //RANDOM NAME
-                StorageReference imageFolder =
+                final StorageReference imageFolder = storageReference.child("images/"+imagename);
+                imageFolder.putFile(saveUri)
+                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                                mDialog.dismiss();
+                                Toast.makeText(WorkerHome.this,"Uploaded Successfully!",Toast.LENGTH_SHORT).show();
+                                imageFolder.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+                                        //update this url to profile avatar
+                                        Map <String,Object> pro_pic_avatar_Update = new HashMap<>();
+                                        pro_pic_avatar_Update.put("pro_pic_URL",uri.toString());
+
+                                        DatabaseReference workerInfo = FirebaseDatabase.getInstance().getReference(Common.user_worker);
+                                        workerInfo.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                                .updateChildren(pro_pic_avatar_Update)
+                                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> task) {
+
+                                                        if (task.isSuccessful())
+                                                        {
+                                                            Toast.makeText(WorkerHome.this,"Uploaded",Toast.LENGTH_SHORT).show();
+                                                        }
+                                                        else
+                                                        {
+                                                            Toast.makeText(WorkerHome.this,"Upload error",Toast.LENGTH_SHORT).show();
+                                                        }
+
+                                                    }
+                                                });
+
+
+                                    }
+                                });
+                            }
+                        }) .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+
+                        double progress = (100.0* taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
+                        mDialog.setMessage("Uploaded"+progress+"%");
+                    }
+                });
 
 
 
