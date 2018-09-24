@@ -3,6 +3,7 @@ package com.pdm.taskdone;
 import android.Manifest;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,6 +13,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -39,6 +41,7 @@ import android.view.MenuItem;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.firebase.geofire.GeoFire;
@@ -92,10 +95,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import dmax.dialog.SpotsDialog;
 import retrofit2.Call;
@@ -110,6 +115,7 @@ public class WorkerHome extends AppCompatActivity
 
     private GoogleMap mMap;
 
+    //ini firebase storage
     FirebaseStorage firebaseStorage;
     StorageReference storageReference;
 
@@ -158,6 +164,9 @@ public class WorkerHome extends AppCompatActivity
 
     //presence system
     DatabaseReference onlineUserRef,currentUserRef;
+
+
+
 
 
 
@@ -285,7 +294,7 @@ public class WorkerHome extends AppCompatActivity
 
 
         //init firebase storage
-        firebaseStorage = FirebaseStorage.getInstance();
+         firebaseStorage = FirebaseStorage.getInstance();
         storageReference = firebaseStorage.getReference();
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
@@ -836,6 +845,9 @@ public class WorkerHome extends AppCompatActivity
             }
 
             else if (id == R.id.nav_EditProfile) {
+
+                showDialogUpdateInfo();
+
             }
 
             else if (id == R.id.nav_ChangePwd) {
@@ -858,11 +870,86 @@ public class WorkerHome extends AppCompatActivity
         return true;
     }
 
+    private void showDialogUpdateInfo() {
+
+
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(WorkerHome.this);
+        alertDialog.setTitle("Edit Info");
+
+
+        LayoutInflater inflater = this.getLayoutInflater();
+        final View layout_edit = inflater.inflate(R.layout.worker_infoedit,null);
+
+        TextInputLayout nameTxtEdit_lay = (TextInputLayout) layout_edit.findViewById(R.id.txtNameEdit_Lay);
+        final TextInputEditText nameTxtEdit_txt = (TextInputEditText) layout_edit.findViewById(R.id.txtName_text);
+
+        TextInputLayout phoneTxt_lay = (TextInputLayout) layout_edit.findViewById(R.id.txtPhoneEdit_Lay);
+        final TextInputEditText phone_Txt_text = (TextInputEditText) layout_edit.findViewById(R.id.txtPhoneEdit_text);
+
+        final ImageView image_upload = (ImageView) layout_edit.findViewById(R.id.addImage);
+
+
+        image_upload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                chooseImage();
+
+            }
+        });
+
+        alertDialog.setView(layout_edit);
+
+
+
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == Common.PICK_IMAGE_REQUEST && requestCode == RESULT_OK
+                && data !=  null && data.getData() != null )
+        {
+            Uri saveUri = data.getData();
+
+            if (saveUri != null)
+            {
+                ProgressDialog mDialog = new ProgressDialog(this);
+                mDialog.setMessage("Uploading");
+                 mDialog.show();
+
+                String imagename = UUID.randomUUID().toString(); //RANDOM NAME
+                StorageReference imageFolder =
+
+
+
+            }
+        }
+
+
+
+    }
+
+    private void chooseImage() {
+
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent,"Select Picture:"),Common.PICK_IMAGE_REQUEST);
+
+
+
+
+
+    }
+
     private void changeNewDialogPwd() {
 
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(WorkerHome.this);
         alertDialog.setTitle("Change Password");
-        alertDialog.setTitle("Please fill all information");
+        alertDialog.setMessage("Please fill all information");
 
         LayoutInflater inflater = this.getLayoutInflater();
         final View layout_pwd = inflater.inflate(R.layout.layout_password_change,null);

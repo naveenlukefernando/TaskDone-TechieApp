@@ -96,7 +96,7 @@
                     android:drawablePadding="5dp"
                     android:hint="Name"
                     android:inputType="text"
-                    android:textColorHint="@color/white"
+                    android:textColorHint="@color/black"
                     android:textSize="14sp">
 
 
