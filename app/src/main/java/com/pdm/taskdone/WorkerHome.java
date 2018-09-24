@@ -27,6 +27,7 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -903,12 +904,68 @@ public class WorkerHome extends AppCompatActivity
         alertDialog.setView(layout_edit);
 
 
+        alertDialog.setPositiveButton("Update Information", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                dialogInterface.dismiss();
+
+                final SpotsDialog waitingDialog = new SpotsDialog(WorkerHome.this);
+                waitingDialog.show();
+
+                String name = nameTxtEdit_txt.getText().toString();
+                String phone = phone_Txt_text.getText().toString();
+
+                Map<String,Object> updateInfo= new  HashMap<>();
+
+                if(!TextUtils.isEmpty(name))
+                    updateInfo.put("name",name);
+
+                if(!TextUtils.isEmpty(phone))
+                updateInfo.put("phone",phone);
+
+
+
+                DatabaseReference workerInfo = FirebaseDatabase.getInstance().getReference(Common.user_worker);
+                workerInfo.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                        .updateChildren(updateInfo)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+
+                                if (task.isSuccessful())
+                                {
+                                    Toast.makeText(WorkerHome.this,"Information Updated",Toast.LENGTH_SHORT).show();
+                                }
+                                else
+                                {
+                                    Toast.makeText(WorkerHome.this,"Information Update Error.",Toast.LENGTH_SHORT).show();
+                                }
+
+                                waitingDialog.dismiss();
+
+                            }
+                        });
+
+
+            }
+        });
+
+        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
 
 
     }
 
 
-    //new propic update method
+
+
+
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
