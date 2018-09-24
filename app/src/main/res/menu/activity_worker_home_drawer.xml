@@ -20,6 +20,12 @@
             android:id="@+id/nav_about"
             android:icon="@drawable/ic_info_black_24dp"
             android:title="ABOUT" />
+
+        <item
+            android:id="@+id/nav_ChangePwd"
+            android:icon="@drawable/ic_lock_black_24dp"
+            android:title="Change Password" />
+
     </group>
 
     <item

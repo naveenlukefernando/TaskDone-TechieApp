@@ -3,18 +3,30 @@ package com.pdm.taskdone;
 import android.Manifest;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemClock;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -26,6 +38,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.firebase.geofire.GeoFire;
@@ -45,6 +58,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.JointType;
@@ -55,7 +69,12 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.maps.model.SquareCap;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.EmailAuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -74,8 +93,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import dmax.dialog.SpotsDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -474,7 +496,7 @@ public class WorkerHome extends AppCompatActivity
 
                                 work_Marker = mMap.addMarker(new MarkerOptions().position(currentPosition)
                                         .flat(true)
-                                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.worker_pin_man_marker)));
+                                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.navigation)));
 
                                 handler = new Handler();
                                 index = -1;
@@ -656,6 +678,7 @@ public class WorkerHome extends AppCompatActivity
                                         if (mCurrent != null) {
                                             mCurrent.remove();  // this will removing current marker.
                                             mCurrent = mMap.addMarker(new MarkerOptions()
+                                                 //   .icon(BitmapDescriptorFactory.fromResource(R.drawable.navigation))
                                                     .position(new LatLng(latitude, longitude))
                                                     .title("Your Location"));
 
@@ -721,7 +744,7 @@ public class WorkerHome extends AppCompatActivity
 
 
         mCurrent = mMap.addMarker(new MarkerOptions()
-                // .icon(BitmapDescriptorFactory.fromResource(R.drawable.worker_pin_man_marker))
+              //  .icon(BitmapDescriptorFactory.fromResource(R.drawable.navigation))
                 .position(new LatLng(0,0))
                 .title(""));
 
@@ -762,14 +785,7 @@ public class WorkerHome extends AppCompatActivity
 
 
 
-
-
-
-
-
-
-
-    }
+        }
 
 
 
@@ -822,7 +838,9 @@ public class WorkerHome extends AppCompatActivity
             else if (id == R.id.nav_EditProfile) {
             }
 
-            else if (id == R.id.nav_help) {
+            else if (id == R.id.nav_ChangePwd) {
+
+                changeNewDialogPwd();
 
             }
 
@@ -831,10 +849,146 @@ public class WorkerHome extends AppCompatActivity
             }
 
             else if (id == R.id.nav_Signout) {
+
+                signout();
             }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    private void changeNewDialogPwd() {
+
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(WorkerHome.this);
+        alertDialog.setTitle("Change Password");
+        alertDialog.setTitle("Please fill all information");
+
+        LayoutInflater inflater = this.getLayoutInflater();
+        final View layout_pwd = inflater.inflate(R.layout.layout_password_change,null);
+
+        TextInputLayout currentPwd_Lay = (TextInputLayout) layout_pwd.findViewById(R.id.edt_password_layout);
+        final TextInputEditText cuurentPwd_Edit = (TextInputEditText) layout_pwd.findViewById(R.id.edit_password_input);
+
+        TextInputLayout newPwdLay = (TextInputLayout) layout_pwd.findViewById(R.id.edt_Newpassword_layout);
+        final TextInputEditText newPwdTxt = (TextInputEditText) layout_pwd.findViewById(R.id.edit_RetypeNewpassword_input);
+
+        TextInputLayout retypePwdLay = (TextInputLayout) layout_pwd.findViewById(R.id.retype_password_layout);
+        final TextInputEditText retypePwdTxt = (TextInputEditText) layout_pwd.findViewById(R.id.edit_RetypeNewpassword_input);
+
+        alertDialog.setView(layout_pwd);
+
+        //set button
+        alertDialog.setPositiveButton("Change Password", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                final SpotsDialog waitingDialog = new SpotsDialog(WorkerHome.this,R.style.SpotDialog);
+
+                waitingDialog.show();
+
+
+                if(newPwdTxt.getText().toString().equals(retypePwdTxt.getText().toString()))
+                {
+
+                    String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+
+                    //re-auth
+                    AuthCredential credential = EmailAuthProvider.getCredential(email,cuurentPwd_Edit.getText().toString());
+                    FirebaseAuth.getInstance().getCurrentUser()
+                            .reauthenticate(credential)
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful())
+                                    {
+                                            FirebaseAuth.getInstance().getCurrentUser()
+                                                    .updatePassword(retypePwdTxt.getText().toString())
+                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task) {
+
+                                                            if(task.isSuccessful())
+                                                            {
+                                                               //update
+                                                                Map<String,Object> password= new HashMap<>();
+
+                                                                password.put("password",newPwdTxt.getText().toString());
+
+                                                                DatabaseReference workerInfo = FirebaseDatabase.getInstance().getReference(Common.user_worker);
+
+                                                                workerInfo.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                                                        .updateChildren(password)
+                                                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                            @Override
+                                                                            public void onComplete(@NonNull Task<Void> task) {
+
+                                                                                        if(task.isSuccessful())
+                                                                                        {
+                                                                                            Toast.makeText(WorkerHome.this,"Password was changed !",Toast.LENGTH_SHORT).show();
+                                                                                            waitingDialog.dismiss();
+
+                                                                                        } else
+                                                                                        {
+                                                                                            Toast.makeText(WorkerHome.this,"Password was changed but Database didn't update",Toast.LENGTH_SHORT).show();
+
+                                                                                        }
+
+
+                                                                            }
+                                                                        });
+
+
+
+
+
+                                                            } else
+                                                            {
+                                                                Toast.makeText(WorkerHome.this,"Passwrod doesn't change",Toast.LENGTH_SHORT).show();
+                                                            }
+                                                        }
+                                                    });
+                                    }
+                                    else
+                                    {
+                                            waitingDialog.dismiss();
+                                            Toast.makeText(WorkerHome.this,"Wrong Old Password",Toast.LENGTH_SHORT).show();
+
+                                    }
+                                }
+                            });
+
+                }
+
+                    else
+                {
+
+                    waitingDialog.dismiss();
+                    Toast.makeText(WorkerHome.this,"Password doesn't match",Toast.LENGTH_SHORT).show();
+
+                }
+
+            }
+        });
+         alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+             @Override
+             public void onClick(DialogInterface dialogInterface, int i) {
+                 dialogInterface.dismiss();
+             }
+         });
+
+         //show dialog
+        alertDialog.show();
+
+    }
+
+    private void signout() {
+
+        FirebaseAuth.getInstance().signOut();
+
+        Intent intent = new Intent(WorkerHome.this,sign_in_up_screen.class);
+        startActivity(intent);
+        finish();
+
+        }
 }
