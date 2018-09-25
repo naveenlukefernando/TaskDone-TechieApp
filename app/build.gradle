@@ -29,6 +29,8 @@ dependencies {
     implementation 'com.github.ganfra:material-spinner:1.1.1'
     implementation 'com.github.d-max:spots-dialog:0.7@aar'
 
+    implementation 'com.squareup.picasso:picasso:2.5.0'
+
     //googleApi init
     implementation 'com.google.android.gms:play-services-maps:15.0.1'
     implementation 'com.firebase:geofire-android:2.3.1'

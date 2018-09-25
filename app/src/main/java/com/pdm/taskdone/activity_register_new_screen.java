@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import dmax.dialog.SpotsDialog;
 import fr.ganfra.materialspinner.MaterialSpinner;
 
 public class activity_register_new_screen extends AppCompatActivity {
@@ -129,13 +130,15 @@ public class activity_register_new_screen extends AppCompatActivity {
                         @Override
                         public void onSuccess(AuthResult authResult) {
 
-                            pro_Pic_url = "https://firebasestorage.googleapis.com/v0/b/taskdone-8edf1.appspot.com/o/default_user_pro.jpg?alt=media&token=e5a670a0-4512-40fa-995c-f9dfaa512c8b";
+                           // pro_Pic_url = "https://firebasestorage.googleapis.com/v0/b/taskdone-8edf1.appspot.com/o/default_user_pro.jpg?alt=media&token=e5a670a0-4512-40fa-995c-f9dfaa512c8b";
+
+                            SpotsDialog waiting = new SpotsDialog (activity_register_new_screen.this);
 
                             //save user to firebase db
                             User_worker user = new User_worker();
                             user.setNIC(nic);
                             user.setProfession(selected_profession);
-                            user.setPro_pic_URL(pro_Pic_url);
+                           user.setPro_pic_URL(pro_Pic_url);
                             user.setCity(city);
                             user.setName(name);
                             user.setEmail(email.getText().toString());
@@ -149,13 +152,24 @@ public class activity_register_new_screen extends AppCompatActivity {
                             users.child(FirebaseAuth.getInstance().getUid()).setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
+
+
+
+
                                     Toast.makeText(activity_register_new_screen.this, "Registered Succesfully.",
                                             Toast.LENGTH_LONG).show();
 
-                                    startActivity(new Intent(activity_register_new_screen.this,WorkerHome.class));
-                                    finish();
+
+
+
+
+
                                 }
+
+
                             })
+
+
                                     .addOnFailureListener(new OnFailureListener() {
                                         @Override
                                         public void onFailure(@NonNull Exception e) {
@@ -167,13 +181,25 @@ public class activity_register_new_screen extends AppCompatActivity {
 
                         }
                     })
+
+
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             Toast.makeText(activity_register_new_screen.this, "Registration Failed.",
                                     Toast.LENGTH_LONG).show();
                         }
+
+
+
                     });
+
+//        startActivity(new Intent(activity_register_new_screen.this,WorkerHome.class));
+//        finish();
+
+
+
+
 
 
 

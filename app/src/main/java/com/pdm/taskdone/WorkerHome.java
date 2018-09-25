@@ -43,6 +43,7 @@ import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.geofire.GeoFire;
@@ -65,6 +66,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.JointType;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
@@ -93,6 +95,7 @@ import com.google.firebase.storage.UploadTask;
 import com.pdm.taskdone.Common.Common;
 import com.pdm.taskdone.Model.Token;
 import com.pdm.taskdone.Remote.IGoogleAPI;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -105,11 +108,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import dmax.dialog.SpotsDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.pdm.taskdone.Common.Common.PICK_IMAGE_REQUEST;
 import static com.pdm.taskdone.Common.Common.mLastlocation;
 
 public class WorkerHome extends AppCompatActivity
@@ -264,6 +269,25 @@ public class WorkerHome extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        View navigationHeaderView = navigationView.getHeaderView(0);
+        TextView txtName = (TextView) navigationHeaderView.findViewById(R.id.top_textWorkerName);
+        CircleImageView imageProPic = (CircleImageView) navigationHeaderView.findViewById(R.id.image_proPic);
+
+        txtName.setText(Common.currentUser.getName());
+
+
+        // checking it null or not
+
+        if (Common.currentUser.getPro_pic_URL() != null
+                && !TextUtils.isEmpty(Common.currentUser.getPro_pic_URL())) {
+            Picasso.with(this)
+                    .load(Common.currentUser.getPro_pic_URL())
+                    .into(imageProPic);
+
+        }
+
+
 
 
 
@@ -884,12 +908,12 @@ public class WorkerHome extends AppCompatActivity
         final View layout_edit = inflater.inflate(R.layout.worker_infoedit,null);
 
         TextInputLayout nameTxtEdit_lay = (TextInputLayout) layout_edit.findViewById(R.id.txtNameEdit_Lay);
-        final TextInputEditText nameTxtEdit_txt = (TextInputEditText) layout_edit.findViewById(R.id.txtName_text);
+        final TextInputEditText nameTxtEdit_txt = (TextInputEditText) layout_edit.findViewById(R.id.txtNameEdit_text);
 
         TextInputLayout phoneTxt_lay = (TextInputLayout) layout_edit.findViewById(R.id.txtPhoneEdit_Lay);
         final TextInputEditText phone_Txt_text = (TextInputEditText) layout_edit.findViewById(R.id.txtPhoneEdit_text);
 
-        final ImageView image_upload = (ImageView) layout_edit.findViewById(R.id.addImage);
+        ImageView image_upload = (ImageView) layout_edit.findViewById(R.id.addImage);
 
 
         image_upload.setOnClickListener(new View.OnClickListener() {
@@ -958,6 +982,7 @@ public class WorkerHome extends AppCompatActivity
             }
         });
 
+            alertDialog.show();
 
     }
 
@@ -971,8 +996,10 @@ public class WorkerHome extends AppCompatActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == Common.PICK_IMAGE_REQUEST && requestCode == RESULT_OK
-                && data !=  null && data.getData() != null )
+      Log.d("ONACTIVITY","RUNNING CLICKED..........");
+
+        if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
+                && data != null && data.getData() != null )
         {
             Uri saveUri = data.getData();
 
@@ -991,6 +1018,8 @@ public class WorkerHome extends AppCompatActivity
 
                                 mDialog.dismiss();
                                 Toast.makeText(WorkerHome.this,"Uploaded Successfully!",Toast.LENGTH_SHORT).show();
+
+
                                 imageFolder.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                     @Override
                                     public void onSuccess(Uri uri) {
@@ -1007,6 +1036,7 @@ public class WorkerHome extends AppCompatActivity
 
                                                         if (task.isSuccessful())
                                                         {
+                                                            Log.d("Hello ","Firebase image");
                                                             Toast.makeText(WorkerHome.this,"Uploaded",Toast.LENGTH_SHORT).show();
                                                         }
                                                         else
@@ -1021,14 +1051,15 @@ public class WorkerHome extends AppCompatActivity
                                     }
                                 });
                             }
-                        }) .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                        })
+                        .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
 
-                        double progress = (100.0* taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
-                        mDialog.setMessage("Uploaded"+progress+"%");
-                    }
-                });
+                                double progress = (100.0* taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
+                                mDialog.setMessage("Uploaded"+progress+"%");
+                            }
+                        }) ;
 
 
 
@@ -1041,10 +1072,14 @@ public class WorkerHome extends AppCompatActivity
 
     private void chooseImage() {
 
+        Log.d("choosed","Clicked");
+
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent,"Select Picture:"),Common.PICK_IMAGE_REQUEST);
+
+
+        startActivityForResult(Intent.createChooser(intent,"Select Picture:"), PICK_IMAGE_REQUEST);
 
 
 
