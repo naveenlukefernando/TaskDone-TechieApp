@@ -3,7 +3,10 @@ package com.pdm.taskdone;
 import android.Manifest;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
@@ -14,7 +17,9 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.animation.LinearInterpolator;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.firebase.geofire.GeoFire;
@@ -106,6 +111,10 @@ public class worker_tracking extends FragmentActivity implements OnMapReadyCallb
 
     private Polyline direction;
 
+    Button btn_start_wrk;
+
+    Location pickuplocation;
+
 
     FirebaseStorage firebaseStorage;
     StorageReference storageReference;
@@ -136,32 +145,81 @@ public class worker_tracking extends FragmentActivity implements OnMapReadyCallb
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
-//        FirebaseDatabase.getInstance().goOnline(); // set Online
-//
-//        if (ActivityCompat.checkSelfPermission(worker_tracking.this,
-//                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-//                ActivityCompat.checkSelfPermission(worker_tracking.this,
-//                        Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//
-//            return;
-//        }
-//
-//        buildLocationCallBack();
-//        buildLocationRequest();
-//
-//        fusedLocationProviderClient.requestLocationUpdates(mlocationRequest, locationCallback, Looper.myLooper());
-//        displayLocation();
-
-
-
 
         setUplocation();
+
+
+        btn_start_wrk = (Button)findViewById(R.id.btnStartTrip);
+        btn_start_wrk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                    Log.d("CLICKED","START");
+//                if (btn_start_wrk.getText().equals("START WORK HERE"))
+//
+//                {
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(worker_tracking.this);
+                    builder.setTitle("Confirm");
+                    builder.setMessage("Are you sure to start work here?");
+
+                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                            Log.d("WORK started","STARTED....");
+
+                        }
+                    });
+
+
+                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                                Log.d("Work" , "Cancelled");
+
+                               dialogInterface.dismiss();
+
+                               startActivity(new Intent(worker_tracking.this,WorkerHome.class));
+                               finish();
+
+
+                        }
+                    });
+
+
+
+                    AlertDialog dialog = builder.create();
+                    // Display the alert dialog on interface
+                    dialog.show();
+
+
+//                        btn_start_wrk.setText("WORK DONE");
+
+
+
+
+//                }
+//
+//                    else if (btn_start_wrk.getText().equals("WORK DONE"))
+//                    {
+//
+//                        doneWork();
+//
+//                    }
+
+            }
+        });
 
 
 
 
     }
 
+    private void doneWork() {
+
+
+
+    }
 
 
     private void setUplocation() {

@@ -130,7 +130,9 @@ public class activity_register_new_screen extends AppCompatActivity {
                         @Override
                         public void onSuccess(AuthResult authResult) {
 
-                           // pro_Pic_url = "https://firebasestorage.googleapis.com/v0/b/taskdone-8edf1.appspot.com/o/default_user_pro.jpg?alt=media&token=e5a670a0-4512-40fa-995c-f9dfaa512c8b";
+                           pro_Pic_url = "https://firebasestorage.googleapis.com/v0/b/taskdone-8edf1.appspot.com/o/default_user_pro.jpg?alt=media&token=e5a670a0-4512-40fa-995c-f9dfaa512c8b";
+
+
 
                             SpotsDialog waiting = new SpotsDialog (activity_register_new_screen.this);
 
@@ -138,7 +140,7 @@ public class activity_register_new_screen extends AppCompatActivity {
                             User_worker user = new User_worker();
                             user.setNIC(nic);
                             user.setProfession(selected_profession);
-                           user.setPro_pic_URL(pro_Pic_url);
+                            user.setPro_pic_URL(pro_Pic_url);
                             user.setCity(city);
                             user.setName(name);
                             user.setEmail(email.getText().toString());
@@ -153,6 +155,14 @@ public class activity_register_new_screen extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(Void aVoid) {
 
+                                    String regScreen = "reg_scn";
+                                    String  move_name = name;
+
+                                    Intent intent = new Intent(activity_register_new_screen.this, WorkerHome.class);
+                                    intent.putExtra("name",move_name);
+                                    intent.putExtra("pro_url",pro_Pic_url);
+                                    startActivity(intent);
+                                    finish();
 
 
 
@@ -160,7 +170,8 @@ public class activity_register_new_screen extends AppCompatActivity {
                                             Toast.LENGTH_LONG).show();
 
 
-
+//                                           startActivity(new Intent(activity_register_new_screen.this,WorkerHome.class));
+//                                            finish();
 
 
 
@@ -194,8 +205,7 @@ public class activity_register_new_screen extends AppCompatActivity {
 
                     });
 
-//        startActivity(new Intent(activity_register_new_screen.this,WorkerHome.class));
-//        finish();
+
 
 
 

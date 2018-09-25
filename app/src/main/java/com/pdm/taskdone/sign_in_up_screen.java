@@ -82,6 +82,10 @@ public class sign_in_up_screen extends AppCompatActivity {
                                    @Override
                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                        Common.currentUser = dataSnapshot.getValue(User_worker.class);
+
+
+
+
                                        startActivity(new Intent(sign_in_up_screen.this,WorkerHome.class));
                                        finish();
                                    }

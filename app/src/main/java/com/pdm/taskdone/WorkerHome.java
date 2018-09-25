@@ -46,6 +46,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.firebase.geofire.GeoFire;
 import com.firebase.geofire.GeoLocation;
 import com.github.glomadrian.materialanimatedswitch.MaterialAnimatedSwitch;
@@ -173,8 +174,10 @@ public class WorkerHome extends AppCompatActivity
     //presence system
     DatabaseReference onlineUserRef,currentUserRef;
 
+    String reg_screen,log_screen,str_Name,proPic_url;
 
-
+    TextView txtName;
+    CircleImageView imageProPic;
 
 
 
@@ -261,6 +264,17 @@ public class WorkerHome extends AppCompatActivity
         setSupportActionBar(toolbar);
 
 
+        // getting data from previous screen
+
+
+//         log_screen = getIntent().getExtras().getString("screen_log");
+//        reg_screen = getIntent().getExtras().getString("screen_reg");
+
+
+
+
+
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -274,18 +288,65 @@ public class WorkerHome extends AppCompatActivity
         TextView txtName = (TextView) navigationHeaderView.findViewById(R.id.top_textWorkerName);
         CircleImageView imageProPic = (CircleImageView) navigationHeaderView.findViewById(R.id.image_proPic);
 
-        txtName.setText(Common.currentUser.getName());
+
+        try {
+
+            if (Common.currentUser.getPro_pic_URL() != null
+                    && !TextUtils.isEmpty(Common.currentUser.getPro_pic_URL())  ) {
+
+                txtName.setText(Common.currentUser.getName());
 
 
-        // checking it null or not
+                Glide.with(WorkerHome.this).load(Common.currentUser.getPro_pic_URL()).into(imageProPic);
 
-        if (Common.currentUser.getPro_pic_URL() != null
-                && !TextUtils.isEmpty(Common.currentUser.getPro_pic_URL())) {
-            Picasso.with(this)
-                    .load(Common.currentUser.getPro_pic_URL())
-                    .into(imageProPic);
+//                Picasso.with(this)
+//                        .load(Common.currentUser.getPro_pic_URL())
+//                        .into(imageProPic);
+            }
 
         }
+
+        catch(Exception e)
+            {
+
+                str_Name = getIntent().getExtras().getString("name");
+                proPic_url = getIntent().getExtras().getString("pro_url");
+                txtName.setText(str_Name);
+
+                Glide.with(WorkerHome.this).load(Common.currentUser.getPro_pic_URL()).into(imageProPic);
+
+//                Picasso.with(this)
+//                    .load(proPic_url)
+//                    .into(imageProPic);
+
+            }
+
+
+
+
+
+
+//        if(log_screen.equals("login_scn"))
+//
+//        {
+//
+//
+//            }
+//
+//
+//
+//            else if (reg_screen.equals("reg_scn"))
+//        {
+//
+//
+//        }
+
+
+
+
+
+
+
 
 
 
@@ -840,6 +901,10 @@ public class WorkerHome extends AppCompatActivity
         } else {
             super.onBackPressed();
         }
+
+     Log.d("BACCKKK","CLICKEDD");
+
+
     }
 
     @Override
