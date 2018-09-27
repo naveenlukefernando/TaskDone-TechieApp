@@ -111,7 +111,7 @@ public class worker_tracking extends FragmentActivity implements OnMapReadyCallb
 
     private Polyline direction;
 
-    Button btn_start_wrk;
+    Button btn_start_wrk, btn_cancel;
 
     Location pickuplocation;
 
@@ -149,7 +149,19 @@ public class worker_tracking extends FragmentActivity implements OnMapReadyCallb
         setUplocation();
 
 
-        btn_start_wrk = (Button)findViewById(R.id.btnStartTrip);
+
+        btn_cancel = (Button)findViewById(R.id.btn_cancelwork);
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                worker_cancelled_NotifyRequest(clientID);
+
+            }
+        });
+
+
+        btn_start_wrk = (Button)findViewById(R.id.btnStartWork);
         btn_start_wrk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

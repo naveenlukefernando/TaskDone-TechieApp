@@ -15,19 +15,36 @@
     android:layout_height="match_parent"
     tools:context=".worker_tracking" />
 
+
     <Button
-        android:id="@+id/btnStartTrip"
+        android:id="@+id/btn_cancelwork"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:enabled="true"
-        android:textColor="@color/white"
-        android:text="@string/start_work_here"
-        android:background="@color/accept"
-        android:layout_marginBottom="10dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginLeft="5dp"
         android:layout_alignParentBottom="true"
-        />
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/red"
+        android:enabled="true"
+        android:text="Cancel"
+        android:textColor="@color/white"
+        android:layout_alignParentLeft="true" />
+
+    <Button
+        android:id="@+id/btnStartWork"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="79dp"
+        android:background="@color/accept"
+        android:enabled="true"
+        android:text="@string/start_work_here"
+        android:textColor="@color/white"
+        android:layout_alignParentLeft="true" />
 
 
 </RelativeLayout>
