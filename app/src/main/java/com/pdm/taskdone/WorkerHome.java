@@ -342,16 +342,6 @@ public class WorkerHome extends AppCompatActivity
 //        }
 
 
-
-
-
-
-
-
-
-
-
-
         //INITIZAIZE
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()

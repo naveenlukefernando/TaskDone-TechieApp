@@ -165,8 +165,12 @@ public class worker_tracking extends FragmentActivity implements OnMapReadyCallb
                     builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-
+                            Log.d("CLIENTTT",clientID);
                             Log.d("WORK started","STARTED....");
+
+                            worker_started_NotifyRequest(clientID);
+
+
 
                         }
                     });
@@ -176,6 +180,8 @@ public class worker_tracking extends FragmentActivity implements OnMapReadyCallb
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                                 Log.d("Work" , "Cancelled");
+
+                            worker_cancelled_NotifyRequest(clientID);
 
                                dialogInterface.dismiss();
 
@@ -215,11 +221,7 @@ public class worker_tracking extends FragmentActivity implements OnMapReadyCallb
 
     }
 
-    private void doneWork() {
 
-
-
-    }
 
 
     private void setUplocation() {
@@ -252,6 +254,64 @@ public class worker_tracking extends FragmentActivity implements OnMapReadyCallb
         }
 
     }
+
+
+    private void worker_started_NotifyRequest(String clientID) {
+
+        Token token = new Token(clientID);
+
+        Notification notification = new Notification("Started","Worker has started work.");
+        Sender sender = new Sender(token.getToken(),notification);
+
+        mFCMService.sendMessage(sender)
+                .enqueue(new Callback<FCMResponse>() {
+                    @Override
+                    public void onResponse(Call<FCMResponse> call, Response<FCMResponse> response) {
+                        if (response.body().success == 1)
+                        {
+                            Toast.makeText(worker_tracking.this,"Work Started.",Toast.LENGTH_SHORT).show();
+
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<FCMResponse> call, Throwable t) {
+
+                    }
+                });
+
+
+    }
+
+
+
+    private void worker_cancelled_NotifyRequest(String clientID) {
+
+        Token token = new Token(clientID);
+
+        Notification notification = new Notification("Canceled","Worker has canceled work.");
+        Sender sender = new Sender(token.getToken(),notification);
+
+        mFCMService.sendMessage(sender)
+                .enqueue(new Callback<FCMResponse>() {
+                    @Override
+                    public void onResponse(Call<FCMResponse> call, Response<FCMResponse> response) {
+                        if (response.body().success == 1)
+                        {
+                            Toast.makeText(worker_tracking.this,"Work declined.",Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<FCMResponse> call, Throwable t) {
+
+                    }
+                });
+
+
+    }
+
 
 
     private void displayLocation() {

@@ -23,6 +23,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.pdm.taskdone.Common.Common;
 import com.pdm.taskdone.Model.User_worker;
 
+import dmax.dialog.SpotsDialog;
+
 public class sign_in_up_screen extends AppCompatActivity {
 
     private Button register_btn,login_btn;
@@ -66,6 +68,10 @@ public class sign_in_up_screen extends AppCompatActivity {
             return;
         }
 
+        final SpotsDialog waiting = new SpotsDialog (sign_in_up_screen.this);
+
+
+
         Toast.makeText(sign_in_up_screen.this, "Loading..",
                 Toast.LENGTH_SHORT).show();
 
@@ -82,12 +88,10 @@ public class sign_in_up_screen extends AppCompatActivity {
                                    @Override
                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                        Common.currentUser = dataSnapshot.getValue(User_worker.class);
-
-
-
-
+                                       waiting.show();
                                        startActivity(new Intent(sign_in_up_screen.this,WorkerHome.class));
                                        finish();
+                                       waiting.dismiss();
                                    }
 
                                    @Override

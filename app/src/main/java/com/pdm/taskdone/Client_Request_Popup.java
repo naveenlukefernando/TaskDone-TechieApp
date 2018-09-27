@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +32,7 @@ import com.pdm.taskdone.Model.Sender;
 import com.pdm.taskdone.Model.Token;
 import com.pdm.taskdone.Remote.IFCMService;
 import com.pdm.taskdone.Remote.IGoogleAPI;
+import com.skyfishjy.library.RippleBackground;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -62,6 +64,10 @@ public class Client_Request_Popup extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client__request__popup);
 
+        final RippleBackground rippleBackground=(RippleBackground)findViewById(R.id.ani_logo);
+        ImageView imageView=(ImageView)findViewById(R.id.taskdone_logo);
+        rippleBackground.startRippleAnimation();
+
         mService = Common.getGoogleAPI();
         miFCMService = Common.getIFCMService();
 
@@ -88,6 +94,11 @@ public class Client_Request_Popup extends AppCompatActivity {
         acceptBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
+                AcceptNotifyRequest(clientID);
+
+
                 Intent intent = new Intent(Client_Request_Popup.this,worker_tracking.class);
 
                 Log.d("Hey","Accepted");
@@ -123,6 +134,38 @@ public class Client_Request_Popup extends AppCompatActivity {
 
 
     }
+
+
+
+
+
+    private void AcceptNotifyRequest(String clientID) {
+
+        Token token = new Token(clientID);
+
+        Notification notification = new Notification("Accept","Worker has Accept your request.");
+        Sender sender = new Sender(token.getToken(),notification);
+
+        miFCMService.sendMessage(sender)
+                .enqueue(new Callback<FCMResponse>() {
+                    @Override
+                    public void onResponse(Call<FCMResponse> call, Response<FCMResponse> response) {
+                        if (response.body().success == 1)
+                        {
+                            Toast.makeText(Client_Request_Popup.this,"Accepted.",Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<FCMResponse> call, Throwable t) {
+
+                    }
+                });
+
+
+    }
+
 
     private void cancelRequest(String clientID) {
 

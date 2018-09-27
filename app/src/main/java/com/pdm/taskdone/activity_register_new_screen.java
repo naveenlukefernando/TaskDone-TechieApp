@@ -134,7 +134,7 @@ public class activity_register_new_screen extends AppCompatActivity {
 
 
 
-                            SpotsDialog waiting = new SpotsDialog (activity_register_new_screen.this);
+                            final SpotsDialog waiting = new SpotsDialog (activity_register_new_screen.this);
 
                             //save user to firebase db
                             User_worker user = new User_worker();
@@ -155,6 +155,7 @@ public class activity_register_new_screen extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(Void aVoid) {
 
+                                    waiting.show();
                                     String regScreen = "reg_scn";
                                     String  move_name = name;
 
@@ -163,7 +164,7 @@ public class activity_register_new_screen extends AppCompatActivity {
                                     intent.putExtra("pro_url",pro_Pic_url);
                                     startActivity(intent);
                                     finish();
-
+                                    waiting.dismiss();
 
 
                                     Toast.makeText(activity_register_new_screen.this, "Registered Succesfully.",
