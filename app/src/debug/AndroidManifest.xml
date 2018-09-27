@@ -1,0 +1,7 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.pdm.taskdone">
+
+    <application>
+        <activity android:name="com.pdm.taskdone.worker_task_started"></activity>
+    </application>
+</manifest>

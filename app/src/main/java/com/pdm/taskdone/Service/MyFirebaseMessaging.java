@@ -1,6 +1,9 @@
 package com.pdm.taskdone.Service;
 
 import android.content.Intent;
+import android.os.Looper;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -24,6 +27,7 @@ public class MyFirebaseMessaging extends FirebaseMessagingService{
         startActivity(intent);
 
 
+        
 
     }
 }

@@ -181,6 +181,17 @@ public class worker_tracking extends FragmentActivity implements OnMapReadyCallb
                             Log.d("WORK started","STARTED....");
 
                             worker_started_NotifyRequest(clientID);
+                            Intent intent = new Intent(worker_tracking.this, worker_task_started.class);
+
+
+
+//                            intent.putExtra("nic",nic);
+//                            intent.putExtra("name",name);
+//                            intent.putExtra("city",selected_city);
+
+
+                            startActivity(intent);
+                            finish();
 
 
 
