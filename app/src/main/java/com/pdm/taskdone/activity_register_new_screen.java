@@ -17,10 +17,14 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.pdm.taskdone.Common.Common;
 import com.pdm.taskdone.Model.User_worker;
+import com.pdm.taskdone.Model.client_model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -155,20 +159,59 @@ public class activity_register_new_screen extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(Void aVoid) {
 
-                                    waiting.show();
-                                    String regScreen = "reg_scn";
-                                    String  move_name = name;
-
-                                    Intent intent = new Intent(activity_register_new_screen.this, WorkerHome.class);
-                                    intent.putExtra("name",move_name);
-                                    intent.putExtra("pro_url",pro_Pic_url);
-                                    startActivity(intent);
-                                    finish();
-                                    waiting.dismiss();
 
 
-                                    Toast.makeText(activity_register_new_screen.this, "Registered Succesfully.",
-                                            Toast.LENGTH_LONG).show();
+                                    FirebaseDatabase.getInstance().getReference(Common.user_worker)
+                                            .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                            .addListenerForSingleValueEvent(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                    Common.currentUser = dataSnapshot.getValue(User_worker.class);
+
+                                                    String  move_name = name;
+                                                    Common.currentUser = dataSnapshot.getValue(User_worker.class);
+
+                                                    Intent intent = new Intent(activity_register_new_screen.this, WorkerHome.class);
+                                                    intent.putExtra("name",move_name);
+                                                    intent.putExtra("pro_url",pro_Pic_url);
+                                                    startActivity(intent);
+                                                    finish();
+
+
+                                                    Toast.makeText(activity_register_new_screen.this, "Registered Succesfully.",
+                                                            Toast.LENGTH_LONG).show();
+
+                                                }
+
+                                                @Override
+                                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                                }
+
+                                            });
+
+
+
+
+
+//                                    FirebaseDatabase.getInstance().getReference(Common.user_client)
+//                                            .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+//                                            .addListenerForSingleValueEvent(new ValueEventListener() {
+//                                                @Override
+//                                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                                                    Common.currentUser_client = dataSnapshot.getValue(client_model.class);
+//
+//                                                    String  move_name = name;
+//                                                    Common.currentUser_client = dataSnapshot.getValue(client_model.class);
+//
+//                                                    }
+//
+//                                                @Override
+//                                                public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                                                }
+//
+//                                            });
 
 
 //                                           startActivity(new Intent(activity_register_new_screen.this,WorkerHome.class));

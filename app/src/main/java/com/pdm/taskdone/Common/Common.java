@@ -3,6 +3,7 @@ package com.pdm.taskdone.Common;
 import android.location.Location;
 
 import com.pdm.taskdone.Model.User_worker;
+import com.pdm.taskdone.Model.client_model;
 import com.pdm.taskdone.Remote.FCMClient;
 import com.pdm.taskdone.Remote.IFCMService;
 import com.pdm.taskdone.Remote.IGoogleAPI;
@@ -24,6 +25,9 @@ public class Common {
     public static final String token_table = "token";
 
     public static User_worker currentUser;
+
+    public static client_model currentUser_client;
+
 
     public static Location mLastlocation = null;
 
