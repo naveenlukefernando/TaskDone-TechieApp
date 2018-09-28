@@ -1,5 +1,6 @@
 package com.pdm.taskdone;
 
+import android.content.Intent;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -91,6 +92,14 @@ public class worker_task_started extends AppCompatActivity {
             Log.d("hours",Integer.toString(h));
             Log.d("minutes",Integer.toString(m));
             Log.d("seconds",Integer.toString(s));
+
+
+            Intent intent = new Intent(worker_task_started.this,finished_task.class);
+            intent.putExtra("h",h);
+            intent.putExtra("m",m);
+            intent.putExtra("s",s);
+            startActivity(intent);
+            finish();
 
 
         }
