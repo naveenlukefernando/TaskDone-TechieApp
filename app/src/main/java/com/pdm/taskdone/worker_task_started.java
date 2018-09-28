@@ -83,7 +83,16 @@ public class worker_task_started extends AppCompatActivity {
             running=false;
 
             String stoptime =  Long.toString(pause);
-            Log.d("Time",stoptime);
+
+            int h   = (int)(pause / 3600000);
+            int m = (int)(pause - h*3600000)/60000;
+            int s= (int)(pause - h*3600000- m*60000)/1000 ;
+
+            Log.d("hours",Integer.toString(h));
+            Log.d("minutes",Integer.toString(m));
+            Log.d("seconds",Integer.toString(s));
+
+
         }
 
 
