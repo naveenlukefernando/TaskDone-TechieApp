@@ -1,5 +1,6 @@
 package com.pdm.taskdone;
 
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,6 +27,7 @@ public class worker_task_started extends AppCompatActivity {
 
     private Chronometer workerTimer;
     private boolean running;
+    private long pause;
 
     IGoogleAPI mService;
     IFCMService mFCMService;
@@ -53,6 +55,7 @@ public class worker_task_started extends AppCompatActivity {
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                pausetime();
                 worker_done(clientID);
                 Log.d("IDDDD",clientID);
             }
@@ -61,6 +64,8 @@ public class worker_task_started extends AppCompatActivity {
         workerTimer = (Chronometer)findViewById(R.id.worker_timer);
 
         if (!running) {
+
+            workerTimer.setBase(SystemClock.elapsedRealtime());
             workerTimer.start();
             running = true;
         }
@@ -70,7 +75,16 @@ public class worker_task_started extends AppCompatActivity {
 
     }
 
+        public void pausetime ()
+        {
+            if(running)
+                workerTimer.stop();
+            pause = SystemClock.elapsedRealtime()- workerTimer.getBase();
+            running=false;
 
+            String stoptime =  Long.toString(pause);
+            Log.d("Time",stoptime);
+        }
 
 
 
@@ -88,7 +102,7 @@ public class worker_task_started extends AppCompatActivity {
                     public void onResponse(Call<FCMResponse> call, Response<FCMResponse> response) {
                         if (response.body().success == 1)
                         {
-                            Toast.makeText(worker_task_started.this,"Work Done.",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(worker_task_started.this,"Work .",Toast.LENGTH_SHORT).show();
 
                         }
                     }
