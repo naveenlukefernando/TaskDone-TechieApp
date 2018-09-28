@@ -185,7 +185,7 @@ public class worker_tracking extends FragmentActivity implements OnMapReadyCallb
 
 
 
-//                            intent.putExtra("nic",nic);
+                            intent.putExtra("clientid",clientID);
 //                            intent.putExtra("name",name);
 //                            intent.putExtra("city",selected_city);
 
