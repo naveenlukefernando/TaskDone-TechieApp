@@ -13,21 +13,28 @@ import com.pdm.taskdone.Client_Request_Popup;
 
 public class MyFirebaseMessaging extends FirebaseMessagingService{
 
+    String name ;
+
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
-       //this will send Firebase message with contain lat and lng from rider app;
+
+        //this will send Firebase message with contain lat and lng from rider app;
         LatLng client_location = new Gson().fromJson(remoteMessage.getNotification().getBody(),LatLng.class);
 
         Intent intent = new Intent(getBaseContext(), Client_Request_Popup.class);
         intent.putExtra("lat",client_location.latitude);
         intent.putExtra("lng",client_location.longitude);
+        intent.putExtra("name",name);
         intent.putExtra("client",remoteMessage.getNotification().getTitle());
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
 
+        }
 
-        
 
-    }
+
+
+
+
 }

@@ -63,6 +63,38 @@
         app:layout_constraintTop_toBottomOf="@+id/textView10"
         app:layout_constraintVertical_bias="0.17000002">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/client_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="30dp"
+                android:text="Client Name  :"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+
+            <TextView
+                android:id="@+id/client_name_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="30dp"
+                android:text="sample"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+        </LinearLayout>
+
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -73,7 +105,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 android:text="Time Duration  :"
                 android:textColor="@color/black"
                 android:textSize="15sp" />
@@ -88,7 +120,7 @@
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 android:text="sample"
                 android:textColor="@color/black"
                 android:textSize="15sp" />
@@ -107,7 +139,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
-                android:text="Hourly Rate       :"
+                android:text="Service Charge :"
                 android:textColor="@color/black"
                 android:textSize="15sp" />
 
@@ -151,7 +183,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:layout_marginLeft="12dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="20dp"
@@ -208,18 +240,18 @@
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/layer_style2"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout6"
-        app:layout_constraintVertical_bias="0.29000002">
+        app:layout_constraintVertical_bias="0.44">
 
         <TextView
+            android:id="@+id/tot_textV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Total :"
+            android:textColor="@color/white"
             android:textSize="30dp" />
 
         <TextView
@@ -227,14 +259,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
+            android:textColor="@color/white"
             android:layout_marginRight="10dp"
-            android:text="5000"
             android:textSize="30dp" />
 
         <TextView
+            android:id="@+id/lkr_textV"
+            android:textColor="@color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="LKR"
             android:textSize="30dp" />
 
     </LinearLayout>
@@ -261,6 +294,27 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout8"
         app:layout_constraintVertical_bias="0.65999997" />
 
+    <Button
+        android:id="@+id/calc"
+        android:layout_width="123dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/red"
+        android:drawableLeft="@drawable/ic_attach_money_black_24dp"
+        android:text="CALCULATE"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.873"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
 
 </android.support.constraint.ConstraintLayout>

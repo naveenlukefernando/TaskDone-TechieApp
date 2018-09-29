@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -25,11 +26,17 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.maps.model.SquareCap;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.pdm.taskdone.Common.Common;
 import com.pdm.taskdone.Model.FCMResponse;
 import com.pdm.taskdone.Model.Notification;
 import com.pdm.taskdone.Model.Sender;
 import com.pdm.taskdone.Model.Token;
+import com.pdm.taskdone.Model.client_model;
 import com.pdm.taskdone.Remote.IFCMService;
 import com.pdm.taskdone.Remote.IGoogleAPI;
 import com.skyfishjy.library.RippleBackground;
@@ -70,6 +77,9 @@ public class Client_Request_Popup extends AppCompatActivity {
 
         mService = Common.getGoogleAPI();
         miFCMService = Common.getIFCMService();
+
+
+
 
         //InitView
 
