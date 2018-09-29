@@ -101,7 +101,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/hourPayRate"
+                android:id="@+id/hourpayrate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
@@ -249,7 +249,7 @@
         android:layout_marginRight="50dp"
         android:layout_marginStart="50dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/layer_style_Button"
+        android:background="@drawable/layer_style_button"
         android:drawableLeft="@drawable/ic_monetization_on_black_24dp"
         android:text="Send Reciept"
         android:textColor="@color/white"
