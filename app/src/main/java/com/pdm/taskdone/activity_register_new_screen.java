@@ -142,6 +142,7 @@ public class activity_register_new_screen extends AppCompatActivity {
 
                             //save user to firebase db
                             User_worker user = new User_worker();
+                            user.setId(FirebaseAuth.getInstance().getUid());
                             user.setNIC(nic);
                             user.setProfession(selected_profession);
                             user.setPro_pic_URL(pro_Pic_url);

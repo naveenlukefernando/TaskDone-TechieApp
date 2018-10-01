@@ -582,8 +582,8 @@ public class WorkerHome extends AppCompatActivity
                                 polyLineAnimator.start();
 
                                 work_Marker = mMap.addMarker(new MarkerOptions().position(currentPosition)
-                                        .flat(true)
-                                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.navigation)));
+                                        .flat(true));
+                                        //.icon(BitmapDescriptorFactory.fromResource(R.drawable.navigation)));
 
                                 handler = new Handler();
                                 index = -1;

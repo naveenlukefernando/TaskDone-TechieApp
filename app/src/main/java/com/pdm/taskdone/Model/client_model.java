@@ -8,6 +8,10 @@ public class client_model {
     private String name;
     private String phone;
 
+    public client_model() {
+
+    }
+
     public client_model(String id, String email, String password, String name, String phone) {
         this.id = id;
         this.email = email;

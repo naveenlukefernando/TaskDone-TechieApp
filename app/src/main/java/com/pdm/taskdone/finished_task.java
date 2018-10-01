@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,9 +26,12 @@ import com.pdm.taskdone.Model.FCMResponse;
 import com.pdm.taskdone.Model.Notification;
 import com.pdm.taskdone.Model.Sender;
 import com.pdm.taskdone.Model.Token;
+import com.pdm.taskdone.Model.User_worker;
 import com.pdm.taskdone.Model.client_model;
 import com.pdm.taskdone.Remote.IFCMService;
 import com.pdm.taskdone.Remote.IGoogleAPI;
+
+import java.util.HashMap;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -38,7 +42,7 @@ public class finished_task extends AppCompatActivity {
     int h,m,s;
 
     TextView hour_rate,time_rate,total, full_total,tot_txt,lkr_text,clientname;
-    EditText worker_amount;
+    EditText worker_amount , description;
 
     double normal_hr_rate = 300 , amount , worker_full_amount , service_fee;
 
@@ -47,7 +51,7 @@ public class finished_task extends AppCompatActivity {
     IGoogleAPI mService;
     IFCMService mFCMService;
 
-    String clientID;
+    String TokenClientID, clientId ,timeDuration ,clientName;
 
 
     @Override
@@ -63,11 +67,44 @@ public class finished_task extends AppCompatActivity {
         m= getIntent().getIntExtra("m",m);
         s =getIntent().getIntExtra("s",s);
 
-        clientID = getIntent().getStringExtra("id");
+        timeDuration =  "0"+h + ":"+ "0" + m + ":"+ "0" + s ;
 
-            Log.d("ARRIVED NAME"," HELOO ******   "+clientID);
+        TokenClientID = getIntent().getStringExtra("id");
+        clientId =  getIntent().getStringExtra("cid");
 
-                Log.d("TIME",String.valueOf(h)+" : "+String.valueOf(m)+" : "+String.valueOf(s));
+
+        Query query = FirebaseDatabase.getInstance().getReference(Common.user_client)
+                .orderByChild("id").equalTo(clientId);
+
+
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                if(dataSnapshot.exists())
+                {
+
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren())
+                    {
+
+                        client_model c_model = snapshot.getValue(client_model.class);
+                        clientName = c_model.getName();
+                        Log.d("GOT IT", " "+clientName);
+
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+
 
         hour_rate = (TextView)findViewById(R.id.time);
         time_rate = (TextView)findViewById(R.id.rate);
@@ -106,6 +143,8 @@ public class finished_task extends AppCompatActivity {
 
 
         worker_amount = (EditText) findViewById(R.id.type_amount);
+        description = (EditText) findViewById(R.id.description_text);
+
 
         Button sendReciept = (Button) findViewById(R.id.send_receipt);
         Button calc = (Button) findViewById(R.id.calc);
@@ -131,6 +170,8 @@ public class finished_task extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+
+
                 String worker_type_amount = worker_amount.getText().toString();
                 double worker_rate = Double.parseDouble(worker_type_amount);
 
@@ -140,20 +181,27 @@ public class finished_task extends AppCompatActivity {
                 lkr_text.setText("LKR");
                 full_total.setText(String.valueOf(worker_full_amount));
 
+                }
 
-            }
+
+
         });
 
         sendReciept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+
+                submitHisoty();
+
 //                full_total.clearComposingText();
 //                full_total.setText("");
 
-                sendreceipt(clientID,worker_full_amount);
-                Toast.makeText(finished_task.this,"Total "+worker_full_amount,Toast.LENGTH_SHORT).show();
-                Log.d("send","Recipt sent "+worker_full_amount);
+                        sendreceipt(TokenClientID, worker_full_amount);
+                        Toast.makeText(finished_task.this, "Total " + worker_full_amount, Toast.LENGTH_SHORT).show();
+                        Log.d("send", "Recipt sent " + worker_full_amount);
+
+
 
 
             }
@@ -191,6 +239,52 @@ public class finished_task extends AppCompatActivity {
 
 
     }
+
+
+    private void submitHisoty ()
+    {
+        String desc = description.getText().toString();
+
+        String currentUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        DatabaseReference workerRef = FirebaseDatabase.getInstance().getReference().child(Common.user_worker).child(currentUid).child("history");
+
+        DatabaseReference clientRef = FirebaseDatabase.getInstance().getReference().child(Common.user_client).child(clientId).child("history");
+
+        DatabaseReference historyRef = FirebaseDatabase.getInstance().getReference().child("history");
+
+
+
+        String reqeustId = historyRef.push().getKey();
+
+        workerRef.child(reqeustId).setValue(true);
+        clientRef.child(reqeustId).setValue(true);
+
+        Log.d("GOT IT 222", " "+clientName);
+
+        HashMap map = new HashMap();
+        map.put("workerid",currentUid);
+        map.put("worker_name",Common.currentUser.getName());
+        map.put("worker_propic",Common.currentUser.getPro_pic_URL());
+        map.put("time_duration",timeDuration);
+        map.put("paid_fee",worker_full_amount);
+        map.put ("worker_city",Common.currentUser.getCity());
+        map.put("clientId",clientId);
+        map.put("client_name",clientName);
+        map.put("description",desc);
+        map.put("type",Common.currentUser.getProfession());
+        map.put("rating",0);
+
+        historyRef.child(reqeustId).updateChildren(map);
+
+
+
+
+
+
+    }
+
+
 
 
 

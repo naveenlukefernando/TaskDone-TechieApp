@@ -61,7 +61,7 @@
         app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView10"
-        app:layout_constraintVertical_bias="0.17000002">
+        app:layout_constraintVertical_bias="0.0">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -93,7 +93,6 @@
                 android:textSize="15sp" />
 
         </LinearLayout>
-
 
 
         <LinearLayout
@@ -227,6 +226,38 @@
 
         </LinearLayout>
 
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:text="Detail about the task"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+
+            <EditText
+                android:id="@+id/description_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:ems="10"
+                android:hint="Please mention"
+                android:inputType="text" />
+
+
+        </LinearLayout>
+
+
     </LinearLayout>
 
 
@@ -245,7 +276,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout6"
-        app:layout_constraintVertical_bias="0.44">
+        app:layout_constraintVertical_bias="0.45">
 
         <TextView
             android:id="@+id/tot_textV"
@@ -259,15 +290,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:textColor="@color/white"
             android:layout_marginRight="10dp"
+            android:textColor="@color/white"
             android:textSize="30dp" />
 
         <TextView
             android:id="@+id/lkr_textV"
-            android:textColor="@color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/white"
             android:textSize="30dp" />
 
     </LinearLayout>
@@ -292,12 +323,12 @@
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout8"
-        app:layout_constraintVertical_bias="0.65999997" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/calc"
-        android:layout_width="123dp"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
@@ -308,10 +339,10 @@
         android:drawableLeft="@drawable/ic_attach_money_black_24dp"
         android:text="CALCULATE"
         android:textColor="@color/white"
-        android:textSize="15sp"
+        android:textSize="10sp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout8"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.873"
+        app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />

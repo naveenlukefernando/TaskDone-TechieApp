@@ -4,6 +4,7 @@ import javax.xml.transform.sax.TemplatesHandler;
 
 public class User_worker {
 
+    private String id;
     private String email;
     private String password;
     private String name;
@@ -16,7 +17,8 @@ public class User_worker {
     public User_worker() {
     }
 
-    public User_worker(String email, String password, String name, String phone , String city ,String NIC,String pro_pic_URL, String profession) {
+    public User_worker(String id,String email, String password, String name, String phone , String city ,String NIC,String pro_pic_URL, String profession) {
+        this.id = id;
         this.email = email;
         this.password = password;
         this.name = name;
@@ -25,6 +27,14 @@ public class User_worker {
         this.NIC = NIC;
         this.profession = profession;
         this.pro_pic_URL = pro_pic_URL;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getEmail() {

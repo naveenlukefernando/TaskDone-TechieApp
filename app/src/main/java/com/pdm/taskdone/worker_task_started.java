@@ -86,7 +86,7 @@ public class worker_task_started extends AppCompatActivity {
                             {
                                  clientID  = snapshot.getKey().toString();
 
-                                    pausetime (TokenclientID);
+                                    pausetime (TokenclientID,clientID);
 
 
                                  Log.d("QUERY"," ***** //// **** ::: "+clientID);
@@ -124,7 +124,7 @@ public class worker_task_started extends AppCompatActivity {
 
     }
 
-        public void pausetime (String id)
+        public void pausetime (String id, String cid)
         {
             if(running)
                 workerTimer.stop();
@@ -147,6 +147,7 @@ public class worker_task_started extends AppCompatActivity {
             intent.putExtra("m",m);
             intent.putExtra("s",s);
             intent.putExtra("id",id);
+            intent.putExtra("cid",cid);
             startActivity(intent);
             finish();
 
