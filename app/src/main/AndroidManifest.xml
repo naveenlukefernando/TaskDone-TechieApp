@@ -63,11 +63,12 @@
             android:label="@string/title_activity_worker_tracking" />
         <activity android:name=".activity_register_top_screen" />
         <activity
-            android:name=".WorkerHome"
+            android:name=".TaskDone"
             android:label="@string/title_activity_worker_home"
             android:theme="@style/AppTheme" />
         <activity android:name=".finished_task" />
-        <activity android:name=".finished_work_done"></activity>
+        <activity android:name=".finished_work_done" />
+        <activity android:name=".history"></activity>
     </application>
 
 </manifest>

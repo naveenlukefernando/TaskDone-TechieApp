@@ -4,28 +4,20 @@ import android.Manifest;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemClock;
-import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
@@ -41,7 +33,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -64,10 +55,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
-import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.JointType;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
@@ -80,7 +68,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.EmailAuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -96,13 +83,11 @@ import com.google.firebase.storage.UploadTask;
 import com.pdm.taskdone.Common.Common;
 import com.pdm.taskdone.Model.Token;
 import com.pdm.taskdone.Remote.IGoogleAPI;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -118,7 +103,7 @@ import retrofit2.Response;
 import static com.pdm.taskdone.Common.Common.PICK_IMAGE_REQUEST;
 import static com.pdm.taskdone.Common.Common.mLastlocation;
 
-public class WorkerHome extends AppCompatActivity
+public class TaskDone extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener , OnMapReadyCallback {
 
 
@@ -297,7 +282,7 @@ public class WorkerHome extends AppCompatActivity
                 txtName.setText(Common.currentUser.getName());
 
 
-                Glide.with(WorkerHome.this).load(Common.currentUser.getPro_pic_URL()).into(imageProPic);
+                Glide.with(TaskDone.this).load(Common.currentUser.getPro_pic_URL()).into(imageProPic);
 
 //                Picasso.with(this)
 //                        .load(Common.currentUser.getPro_pic_URL())
@@ -313,7 +298,7 @@ public class WorkerHome extends AppCompatActivity
                 proPic_url = getIntent().getExtras().getString("pro_url");
                 txtName.setText(str_Name);
 
-                Glide.with(WorkerHome.this).load(Common.currentUser.getPro_pic_URL()).into(imageProPic);
+                Glide.with(TaskDone.this).load(Common.currentUser.getPro_pic_URL()).into(imageProPic);
 
 //                Picasso.with(this)
 //                    .load(proPic_url)
@@ -392,9 +377,9 @@ public class WorkerHome extends AppCompatActivity
 
                     FirebaseDatabase.getInstance().goOnline(); // set Online
 
-                    if (ActivityCompat.checkSelfPermission(WorkerHome.this,
+                    if (ActivityCompat.checkSelfPermission(TaskDone.this,
                             Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                            ActivityCompat.checkSelfPermission(WorkerHome.this,
+                            ActivityCompat.checkSelfPermission(TaskDone.this,
                                     Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
                         return;
@@ -405,7 +390,7 @@ public class WorkerHome extends AppCompatActivity
 
                     fusedLocationProviderClient.requestLocationUpdates(mlocationRequest, locationCallback, Looper.myLooper());
                     displayLocation();
-                    Toast.makeText(WorkerHome.this, "You are Online", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TaskDone.this, "You are Online", Toast.LENGTH_SHORT).show();
 
                 } else {
 
@@ -419,7 +404,7 @@ public class WorkerHome extends AppCompatActivity
 
                     if(handler != null)
                         handler.removeCallbacks(drawPathRunnable);
-                    Toast.makeText(WorkerHome.this, "You are Offline", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TaskDone.this, "You are Offline", Toast.LENGTH_SHORT).show();
 
 
                 }
@@ -444,14 +429,14 @@ public class WorkerHome extends AppCompatActivity
                     getDirection();
                 }else
                 {
-                    Toast.makeText(WorkerHome.this,"Please change your status to ONLINE.",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TaskDone.this,"Please change your status to ONLINE.",Toast.LENGTH_SHORT).show();
 
                 }
             }
 
             @Override
             public void onError(Status status) {
-                Toast.makeText(WorkerHome.this,""+ status.toString(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(TaskDone.this,""+ status.toString(),Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -600,7 +585,7 @@ public class WorkerHome extends AppCompatActivity
 
                         @Override
                         public void onFailure(Call<String> call, Throwable t) {
-                            Toast.makeText(WorkerHome.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(TaskDone.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
 
                         }
                     });
@@ -924,6 +909,8 @@ public class WorkerHome extends AppCompatActivity
 
             if (id == R.id.nav_workHistory) {
                 // Handle the camera action
+                Intent intent = new Intent(TaskDone.this,history.class);
+                startActivity(intent);
             }
 
             else if (id == R.id.nav_EditProfile) {
@@ -955,7 +942,7 @@ public class WorkerHome extends AppCompatActivity
     private void showDialogUpdateInfo() {
 
 
-        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(WorkerHome.this);
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(TaskDone.this);
         alertDialog.setTitle("Edit Info");
 
 
@@ -989,7 +976,7 @@ public class WorkerHome extends AppCompatActivity
 
                 dialogInterface.dismiss();
 
-                final SpotsDialog waitingDialog = new SpotsDialog(WorkerHome.this);
+                final SpotsDialog waitingDialog = new SpotsDialog(TaskDone.this);
                 waitingDialog.show();
 
                 String name = nameTxtEdit_txt.getText().toString();
@@ -1014,11 +1001,11 @@ public class WorkerHome extends AppCompatActivity
 
                                 if (task.isSuccessful())
                                 {
-                                    Toast.makeText(WorkerHome.this,"Information Updated",Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(TaskDone.this,"Information Updated",Toast.LENGTH_SHORT).show();
                                 }
                                 else
                                 {
-                                    Toast.makeText(WorkerHome.this,"Information Update Error.",Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(TaskDone.this,"Information Update Error.",Toast.LENGTH_SHORT).show();
                                 }
 
                                 waitingDialog.dismiss();
@@ -1072,7 +1059,7 @@ public class WorkerHome extends AppCompatActivity
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
                                 mDialog.dismiss();
-                                Toast.makeText(WorkerHome.this,"Uploaded Successfully!",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(TaskDone.this,"Uploaded Successfully!",Toast.LENGTH_SHORT).show();
 
 
                                 imageFolder.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -1092,11 +1079,11 @@ public class WorkerHome extends AppCompatActivity
                                                         if (task.isSuccessful())
                                                         {
                                                             Log.d("Hello ","Firebase image");
-                                                            Toast.makeText(WorkerHome.this,"Uploaded",Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(TaskDone.this,"Uploaded",Toast.LENGTH_SHORT).show();
                                                         }
                                                         else
                                                         {
-                                                            Toast.makeText(WorkerHome.this,"Upload error",Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(TaskDone.this,"Upload error",Toast.LENGTH_SHORT).show();
                                                         }
 
                                                     }
@@ -1144,7 +1131,7 @@ public class WorkerHome extends AppCompatActivity
 
     private void changeNewDialogPwd() {
 
-        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(WorkerHome.this);
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(TaskDone.this);
         alertDialog.setTitle("Change Password");
         alertDialog.setMessage("Please fill all information");
 
@@ -1167,7 +1154,7 @@ public class WorkerHome extends AppCompatActivity
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
-                final SpotsDialog waitingDialog = new SpotsDialog(WorkerHome.this,R.style.SpotDialog);
+                final SpotsDialog waitingDialog = new SpotsDialog(TaskDone.this,R.style.SpotDialog);
 
                 waitingDialog.show();
 
@@ -1209,12 +1196,12 @@ public class WorkerHome extends AppCompatActivity
 
                                                                                         if(task.isSuccessful())
                                                                                         {
-                                                                                            Toast.makeText(WorkerHome.this,"Password was changed !",Toast.LENGTH_SHORT).show();
+                                                                                            Toast.makeText(TaskDone.this,"Password was changed !",Toast.LENGTH_SHORT).show();
                                                                                             waitingDialog.dismiss();
 
                                                                                         } else
                                                                                         {
-                                                                                            Toast.makeText(WorkerHome.this,"Password was changed but Database didn't update",Toast.LENGTH_SHORT).show();
+                                                                                            Toast.makeText(TaskDone.this,"Password was changed but Database didn't update",Toast.LENGTH_SHORT).show();
 
                                                                                         }
 
@@ -1228,7 +1215,7 @@ public class WorkerHome extends AppCompatActivity
 
                                                             } else
                                                             {
-                                                                Toast.makeText(WorkerHome.this,"Passwrod doesn't change",Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(TaskDone.this,"Passwrod doesn't change",Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     });
@@ -1236,7 +1223,7 @@ public class WorkerHome extends AppCompatActivity
                                     else
                                     {
                                             waitingDialog.dismiss();
-                                            Toast.makeText(WorkerHome.this,"Wrong Old Password",Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(TaskDone.this,"Wrong Old Password",Toast.LENGTH_SHORT).show();
 
                                     }
                                 }
@@ -1248,7 +1235,7 @@ public class WorkerHome extends AppCompatActivity
                 {
 
                     waitingDialog.dismiss();
-                    Toast.makeText(WorkerHome.this,"Password doesn't match",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TaskDone.this,"Password doesn't match",Toast.LENGTH_SHORT).show();
 
                 }
 
@@ -1270,7 +1257,7 @@ public class WorkerHome extends AppCompatActivity
 
         FirebaseAuth.getInstance().signOut();
 
-        Intent intent = new Intent(WorkerHome.this,sign_in_up_screen.class);
+        Intent intent = new Intent(TaskDone.this,sign_in_up_screen.class);
         startActivity(intent);
         finish();
 

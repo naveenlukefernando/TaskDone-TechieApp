@@ -24,7 +24,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.pdm.taskdone.Common.Common;
 import com.pdm.taskdone.Model.User_worker;
-import com.pdm.taskdone.Model.client_model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -172,7 +171,7 @@ public class activity_register_new_screen extends AppCompatActivity {
                                                     String  move_name = name;
                                                     Common.currentUser = dataSnapshot.getValue(User_worker.class);
 
-                                                    Intent intent = new Intent(activity_register_new_screen.this, WorkerHome.class);
+                                                    Intent intent = new Intent(activity_register_new_screen.this, TaskDone.class);
                                                     intent.putExtra("name",move_name);
                                                     intent.putExtra("pro_url",pro_Pic_url);
                                                     startActivity(intent);
@@ -215,7 +214,7 @@ public class activity_register_new_screen extends AppCompatActivity {
 //                                            });
 
 
-//                                           startActivity(new Intent(activity_register_new_screen.this,WorkerHome.class));
+//                                           startActivity(new Intent(activity_register_new_screen.this,TaskDone.class));
 //                                            finish();
 
 

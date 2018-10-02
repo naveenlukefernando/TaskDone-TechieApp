@@ -1,7 +1,6 @@
 package com.pdm.taskdone;
 
 import android.Manifest;
-import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -11,14 +10,12 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.AsyncTask;
-import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -31,7 +28,6 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -39,16 +35,12 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
-import com.google.android.gms.maps.model.JointType;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
-import com.google.android.gms.maps.model.SquareCap;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -63,7 +55,6 @@ import com.pdm.taskdone.Model.Token;
 import com.pdm.taskdone.Remote.IFCMService;
 import com.pdm.taskdone.Remote.IGoogleAPI;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -208,7 +199,7 @@ public class worker_tracking extends FragmentActivity implements OnMapReadyCallb
 
                                dialogInterface.dismiss();
 
-                               startActivity(new Intent(worker_tracking.this,WorkerHome.class));
+                               startActivity(new Intent(worker_tracking.this,TaskDone.class));
                                finish();
 
 

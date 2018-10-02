@@ -29,7 +29,7 @@ public class finished_work_done extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(finished_work_done.this,WorkerHome.class);
+                Intent intent = new Intent(finished_work_done.this,TaskDone.class);
                 startActivity(intent);
                 finish();
 

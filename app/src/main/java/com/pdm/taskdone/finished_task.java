@@ -21,6 +21,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.pdm.taskdone.Common.Common;
 import com.pdm.taskdone.Model.FCMResponse;
 import com.pdm.taskdone.Model.Notification;
@@ -31,6 +33,10 @@ import com.pdm.taskdone.Model.client_model;
 import com.pdm.taskdone.Remote.IFCMService;
 import com.pdm.taskdone.Remote.IGoogleAPI;
 
+import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 
 import retrofit2.Call;
@@ -115,31 +121,6 @@ public class finished_task extends AppCompatActivity {
         clientname = (TextView)findViewById(R.id.client_name_text);
 
 
-//        client_name_ref = FirebaseDatabase.getInstance().getReference(clientID);
-//        Query name_query = client_name_ref.child("name");
-//
-//
-//
-//        name_query.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                if(dataSnapshot.exists())
-//                {
-//                    for (DataSnapshot snapshot : dataSnapshot.getChildren())
-//                    {
-//                       String name = snapshot.child("name").getValue().toString();
-//                        //clientname.setText(name);
-//                        Log.d("QUERY"," ***** //// **** ::: " + name);
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
-
 
 
         worker_amount = (EditText) findViewById(R.id.type_amount);
@@ -192,12 +173,12 @@ public class finished_task extends AppCompatActivity {
             public void onClick(View view) {
 
 
-                submitHisoty();
+                submitHisoty(TokenClientID,worker_full_amount);
 
 //                full_total.clearComposingText();
 //                full_total.setText("");
 
-                        sendreceipt(TokenClientID, worker_full_amount);
+
                         Toast.makeText(finished_task.this, "Total " + worker_full_amount, Toast.LENGTH_SHORT).show();
                         Log.d("send", "Recipt sent " + worker_full_amount);
 
@@ -213,11 +194,19 @@ public class finished_task extends AppCompatActivity {
 
 
 
-    private void sendreceipt(String clientID,double tot ) {
+    private void sendreceipt(String clientID,double tot,String historyID, String Wname ) {
+
+
+                  String json = toJSONObject(clientID,tot,historyID, Wname);
+
+                  Log.d("JSON /*/*/*/", " "+json);
+
+
+
 
         Token token = new Token(clientID);
 
-        Notification notification = new Notification("receive_payment_method",String.valueOf(tot));
+        Notification notification = new Notification("receive_payment_method",json);
         Sender sender = new Sender(token.getToken(),notification);
 
         mFCMService.sendMessage(sender)
@@ -241,8 +230,14 @@ public class finished_task extends AppCompatActivity {
     }
 
 
-    private void submitHisoty ()
+    private void submitHisoty ( String tokenId,double total)
     {
+
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        String date = df.format(c.getTime());
+
+
         String desc = description.getText().toString();
 
         String currentUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -252,6 +247,7 @@ public class finished_task extends AppCompatActivity {
         DatabaseReference clientRef = FirebaseDatabase.getInstance().getReference().child(Common.user_client).child(clientId).child("history");
 
         DatabaseReference historyRef = FirebaseDatabase.getInstance().getReference().child("history");
+
 
 
 
@@ -267,7 +263,8 @@ public class finished_task extends AppCompatActivity {
         map.put("worker_name",Common.currentUser.getName());
         map.put("worker_propic",Common.currentUser.getPro_pic_URL());
         map.put("time_duration",timeDuration);
-        map.put("paid_fee",worker_full_amount);
+        map.put("paid_fee",worker_full_amount+" LKR");
+        map.put("date",date);
         map.put ("worker_city",Common.currentUser.getCity());
         map.put("clientId",clientId);
         map.put("client_name",clientName);
@@ -278,13 +275,39 @@ public class finished_task extends AppCompatActivity {
         historyRef.child(reqeustId).updateChildren(map);
 
 
-
+        sendreceipt(tokenId,total, reqeustId ,Common.currentUser.getName());
 
 
 
     }
 
+    private static String toJSONObject (String clientId,double tot , String historyKey ,String wusName)
+    {
 
+
+        try {
+            JSONObject jsonObject = new JSONObject();
+
+            jsonObject.put("Cname", wusName);
+            jsonObject.put("clientID", clientId);
+            jsonObject.put("total",tot);
+            jsonObject.put("historyID",historyKey);
+
+
+            return jsonObject.toString();
+
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        return null;
+
+
+
+
+    }
 
 
 

@@ -7,19 +7,28 @@ public class client_model {
     private String password;
     private String name;
     private String phone;
+    private String address;
 
     public client_model() {
 
     }
 
-    public client_model(String id, String email, String password, String name, String phone) {
+    public client_model(String address,String id, String email, String password, String name, String phone) {
         this.id = id;
+        this.address=id;
         this.email = email;
         this.password = password;
         this.name = name;
         this.phone = phone;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
     public String getId() {
         return id;
