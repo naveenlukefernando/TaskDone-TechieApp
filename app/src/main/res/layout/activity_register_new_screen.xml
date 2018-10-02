@@ -77,29 +77,6 @@
 
 
             <!-- e-mail/>-->
-
-            <fr.ganfra.materialspinner.MaterialSpinner
-                android:id="@+id/spinner_profession"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="17dp"
-                android:layout_marginRight="17dp"
-                android:layout_marginTop="10dp"
-                app:ms_arrowColor="#0000FF"
-                app:ms_arrowSize="16dp"
-                app:ms_floatingLabelColor="#A9A9A9"
-                app:ms_floatingLabelText="Select your profession"
-                app:ms_hint="Please choose your profession"
-                app:ms_hintColor="#000000"
-                app:ms_multiline="true"
-
-                >
-
-            </fr.ganfra.materialspinner.MaterialSpinner>
-
-            //email
-
             <android.support.design.widget.TextInputLayout
 
                 android:id="@+id/textInput_Layer_Email"
@@ -132,8 +109,7 @@
 
             </android.support.design.widget.TextInputLayout>
 
-            //password
-
+            <!--passsword-->
             <android.support.design.widget.TextInputLayout
 
                 android:id="@+id/textInput_Layer_password"
@@ -166,7 +142,7 @@
 
             </android.support.design.widget.TextInputLayout>
 
-            //retype
+
 
             <android.support.design.widget.TextInputLayout
 

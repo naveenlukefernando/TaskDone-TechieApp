@@ -6,7 +6,9 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.LoginFilter;
+import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -22,10 +24,13 @@ import java.util.List;
 
 import fr.ganfra.materialspinner.MaterialSpinner;
 
+// Created by Naveen IT16008892
+
 public class activity_register_top_screen extends AppCompatActivity {
 
     MaterialSpinner   spinner;
     List<String> listItems = new ArrayList<>();
+    List<String> professionistItems = new ArrayList<>();
     ArrayAdapter <String> adapter;
 
     private TextInputLayout nic_layout,name_layout;
@@ -33,7 +38,7 @@ public class activity_register_top_screen extends AppCompatActivity {
 
     private Button conti_btn;
 
-    private String selected_city, nic;
+    private String selected_city, nic,selected_profession;
     private int position_text;
 
 
@@ -70,6 +75,40 @@ public class activity_register_top_screen extends AppCompatActivity {
 
             }
         });
+
+
+
+
+        initItems_Cities();
+
+        spinner = (MaterialSpinner) findViewById(R.id.spinner_profession);
+        adapter = new ArrayAdapter<String>(this ,R.layout.support_simple_spinner_dropdown_item,professionistItems);
+        adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+
+                if (position != -1) // plese choose will notify
+                {
+
+                    selected_profession =spinner.getItemAtPosition(position).toString();
+
+                    Log.d("Clicked",selected_profession);
+
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+
 
         nic_layout = (TextInputLayout) findViewById(R.id.textInput_Layer_NIC) ;
         textinput_nic = (TextInputEditText)findViewById(R.id.nic_text) ;
@@ -128,6 +167,23 @@ public class activity_register_top_screen extends AppCompatActivity {
     }
 
 
+
+
+
+    private void initItems_Cities() {
+
+
+        String[] profession = {"Electrician","A/C Technician","Carpenters","Painters","Welding"};
+
+
+
+        ArrayList<String> aList = new ArrayList<String>(Arrays.asList(profession));
+        professionistItems.addAll(aList);
+
+
+    }
+
+
     private boolean validateNic ()
     {
         String nic = nic_layout.getEditText().getText().toString().trim();
@@ -144,18 +200,8 @@ public class activity_register_top_screen extends AppCompatActivity {
         return true;
     }
 
-//    boolean validateSpinner(String error,int position){
-//
-//        error =spinner.getItemAtPosition(position).toString();
-//
-//        if(error.isEmpty()){
-//
-//           spinner.setError("Please Select a city");
-//
-//            return false; }
-//
-//        return true;
-//    }
+
+
 
 
 }

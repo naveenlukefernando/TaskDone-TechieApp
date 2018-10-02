@@ -24,6 +24,9 @@ import com.pdm.taskdone.Common.Common;
 import com.pdm.taskdone.Model.User_worker;
 
 import dmax.dialog.SpotsDialog;
+import io.paperdb.Paper;
+
+// Created by Naveen IT16008892
 
 public class sign_in_up_screen extends AppCompatActivity {
 
@@ -87,6 +90,10 @@ public class sign_in_up_screen extends AppCompatActivity {
                                .addListenerForSingleValueEvent(new ValueEventListener() {
                                    @Override
                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                                       Paper.book().write(Common.user_field,textinput_edit_Email.getText().toString());
+                                       Paper.book().write(Common.password_field,textInput_edit_Password.getText().toString());
+
                                        Common.currentUser = dataSnapshot.getValue(User_worker.class);
                                        waiting.show();
                                        startActivity(new Intent(sign_in_up_screen.this,TaskDone.class));

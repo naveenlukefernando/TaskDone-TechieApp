@@ -24,14 +24,15 @@
         <TextView
             android:id="@+id/textView5"
             android:layout_width="wrap_content"
-            android:layout_height="55dp"
+            android:layout_height="wrap_content"
             android:text="@string/top_Head"
             android:textColor="@color/white"
-            android:textSize="40sp" />
+            android:textSize="20sp" />
 
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -39,13 +40,13 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="50dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.110000014">
+        app:layout_constraintVertical_bias="0.23000002">
 
 
         <LinearLayout
@@ -149,6 +150,29 @@
                 app:ms_hint="Please choose a city"
                 app:ms_hintColor="#000000"
                 app:ms_multiline="true"
+                app:ms_enableErrorLabel="true"
+
+                >
+
+            </fr.ganfra.materialspinner.MaterialSpinner>
+
+
+            <fr.ganfra.materialspinner.MaterialSpinner
+                android:id="@+id/spinner_profession"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="17dp"
+                android:layout_marginRight="17dp"
+                android:layout_marginTop="10dp"
+                app:ms_arrowColor="#0000FF"
+                app:ms_arrowSize="16dp"
+                app:ms_floatingLabelColor="#A9A9A9"
+                app:ms_floatingLabelText="Select your profession"
+                app:ms_hint="Please choose your profession"
+                app:ms_hintColor="#000000"
+                app:ms_multiline="true"
+                app:ms_enableErrorLabel="true"
 
                 >
 
@@ -165,13 +189,13 @@
         android:id="@+id/linearLayout4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="8dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.96">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout9"
+        app:layout_constraintVertical_bias="0.83">
 
         <Button
             android:id="@+id/continue_btn"

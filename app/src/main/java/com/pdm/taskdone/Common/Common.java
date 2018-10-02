@@ -26,6 +26,10 @@ public class Common {
 
     public static User_worker currentUser;
 
+    public static final String user_field = "usr";
+    public static final String password_field = "pwd";
+
+
     public static client_model currentUser_client;
 
 

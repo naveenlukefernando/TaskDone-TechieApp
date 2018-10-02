@@ -1,5 +1,8 @@
 package com.pdm.taskdone;
 
+
+
+
 import android.Manifest;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
@@ -96,12 +99,16 @@ import java.util.UUID;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import dmax.dialog.SpotsDialog;
+import io.paperdb.Paper;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.pdm.taskdone.Common.Common.PICK_IMAGE_REQUEST;
 import static com.pdm.taskdone.Common.Common.mLastlocation;
+
+
+// Created by Naveen IT16008892
 
 public class TaskDone extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener , OnMapReadyCallback {
@@ -1254,6 +1261,9 @@ public class TaskDone extends AppCompatActivity
     }
 
     private void signout() {
+
+        Paper.init(this);
+        Paper.book().destroy();
 
         FirebaseAuth.getInstance().signOut();
 

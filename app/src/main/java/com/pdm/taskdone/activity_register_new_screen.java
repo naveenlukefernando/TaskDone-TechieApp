@@ -6,7 +6,9 @@ import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -31,6 +33,10 @@ import java.util.List;
 
 import dmax.dialog.SpotsDialog;
 import fr.ganfra.materialspinner.MaterialSpinner;
+import io.paperdb.Paper;
+
+
+// Created by Naveen IT16008892
 
 public class activity_register_new_screen extends AppCompatActivity {
 
@@ -40,13 +46,15 @@ public class activity_register_new_screen extends AppCompatActivity {
     DatabaseReference users;
 
     MaterialSpinner spinner;
-    List<String> professionistItems = new ArrayList<>();
-    ArrayAdapter <String> adapter;
+
 
 
     private Button reg_done_btn;
     private TextInputEditText email,phone,password,re_password;
-    private TextInputLayout email_lay,phone_lay,password_lay,re_password_lay;
+    private static TextInputLayout email_lay;
+    private TextInputLayout phone_lay;
+    private TextInputLayout password_lay;
+    private TextInputLayout re_password_lay;
 
     String nic,city,name,pro_Pic_url,selected_profession;
 
@@ -85,34 +93,7 @@ public class activity_register_new_screen extends AppCompatActivity {
 
 
 
-        initItems();
 
-        spinner = (MaterialSpinner) findViewById(R.id.spinner_profession);
-        adapter = new ArrayAdapter<String>(this ,R.layout.support_simple_spinner_dropdown_item,professionistItems);
-        adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-
-                if (position != -1) // plese choose will notify
-                {
-
-                    selected_profession =spinner.getItemAtPosition(position).toString();
-
-                    Log.d("Clicked",selected_profession);
-
-                }
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
 
 
     }
@@ -166,6 +147,9 @@ public class activity_register_new_screen extends AppCompatActivity {
                                             .addListenerForSingleValueEvent(new ValueEventListener() {
                                                 @Override
                                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                                                    Paper.book().write(Common.user_field,email.getText().toString());
+                                                    Paper.book().write(Common.password_field,password.getText().toString());
                                                     Common.currentUser = dataSnapshot.getValue(User_worker.class);
 
                                                     String  move_name = name;
@@ -191,31 +175,6 @@ public class activity_register_new_screen extends AppCompatActivity {
                                             });
 
 
-
-
-
-//                                    FirebaseDatabase.getInstance().getReference(Common.user_client)
-//                                            .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-//                                            .addListenerForSingleValueEvent(new ValueEventListener() {
-//                                                @Override
-//                                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                                                    Common.currentUser_client = dataSnapshot.getValue(client_model.class);
-//
-//                                                    String  move_name = name;
-//                                                    Common.currentUser_client = dataSnapshot.getValue(client_model.class);
-//
-//                                                    }
-//
-//                                                @Override
-//                                                public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//                                                }
-//
-//                                            });
-
-
-//                                           startActivity(new Intent(activity_register_new_screen.this,TaskDone.class));
-//                                            finish();
 
 
 
@@ -329,18 +288,14 @@ public class activity_register_new_screen extends AppCompatActivity {
         return true;
     }
 
-    private void initItems() {
+    public static boolean isValidEmail() {
+
+        String target = email_lay.getEditText().getText().toString().trim();
 
 
-        String[] profession = {"Electrician","A/C Technician","Carpenters","Painters","Welding"};
-
-
-
-        ArrayList<String> aList = new ArrayList<String>(Arrays.asList(profession));
-        professionistItems.addAll(aList);
-
-
+        return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
     }
+
 
 }
 

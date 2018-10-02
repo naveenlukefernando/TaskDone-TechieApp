@@ -151,7 +151,8 @@ public class finished_task extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-
+            if (!validateTotal ())
+            {return;}
 
                 String worker_type_amount = worker_amount.getText().toString();
                 double worker_rate = Double.parseDouble(worker_type_amount);
@@ -172,11 +173,9 @@ public class finished_task extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                if (!validateReceipt () || !validateDescription()){return;}
 
                 submitHisoty(TokenClientID,worker_full_amount);
-
-//                full_total.clearComposingText();
-//                full_total.setText("");
 
 
                         Toast.makeText(finished_task.this, "Total " + worker_full_amount, Toast.LENGTH_SHORT).show();
@@ -194,10 +193,10 @@ public class finished_task extends AppCompatActivity {
 
 
 
-    private void sendreceipt(String clientID,double tot,String historyID, String Wname ) {
+    private void sendreceipt(String clientID,double tot,String historyID, String Wname , String wId) {
 
 
-                  String json = toJSONObject(clientID,tot,historyID, Wname);
+                  String json = toJSONObject(clientID,tot,historyID, Wname,wId);
 
                   Log.d("JSON /*/*/*/", " "+json);
 
@@ -232,6 +231,11 @@ public class finished_task extends AppCompatActivity {
 
     private void submitHisoty ( String tokenId,double total)
     {
+        if (!validateDescription ())
+        {
+            return;
+        }
+
 
         Calendar c = Calendar.getInstance();
         SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
@@ -265,6 +269,7 @@ public class finished_task extends AppCompatActivity {
         map.put("time_duration",timeDuration);
         map.put("paid_fee",worker_full_amount+" LKR");
         map.put("date",date);
+        map.put("comment","Not Available");
         map.put ("worker_city",Common.currentUser.getCity());
         map.put("clientId",clientId);
         map.put("client_name",clientName);
@@ -274,24 +279,25 @@ public class finished_task extends AppCompatActivity {
 
         historyRef.child(reqeustId).updateChildren(map);
 
+        sendreceipt(tokenId,total, reqeustId ,Common.currentUser.getName(),currentUid);
 
-        sendreceipt(tokenId,total, reqeustId ,Common.currentUser.getName());
-
+        map.clear();
 
 
     }
 
-    private static String toJSONObject (String clientId,double tot , String historyKey ,String wusName)
+    private static String toJSONObject (String clientId,double tot , String historyKey ,String wusName, String wId)
     {
 
 
         try {
             JSONObject jsonObject = new JSONObject();
 
-            jsonObject.put("Cname", wusName);
+            jsonObject.put("Wname", wusName);
             jsonObject.put("clientID", clientId);
             jsonObject.put("total",tot);
             jsonObject.put("historyID",historyKey);
+            jsonObject.put("wid",wId);
 
 
             return jsonObject.toString();
@@ -308,6 +314,58 @@ public class finished_task extends AppCompatActivity {
 
 
     }
+
+    private boolean validateTotal ()
+    {
+        String tot = worker_amount.getText().toString().trim();
+
+        if(tot.isEmpty()){
+            Toast.makeText(finished_task.this,"Please leave your amount.",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        {
+
+            return true;
+        }
+
+    }
+
+
+
+    private boolean validateReceipt ()
+    {
+        String tot = full_total.getText().toString().trim();
+
+        if(tot.isEmpty()){
+            Toast.makeText(finished_task.this,"Please Calculate the amount,",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        {
+
+            return true;
+        }
+
+    }
+
+
+    private boolean validateDescription ()
+    {
+        String descrip = description.getText().toString().trim();
+
+        if(descrip.isEmpty()){
+            Toast.makeText(finished_task.this,"Please leave Description of task.",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        {
+
+            return true;
+        }
+
+    }
+
 
 
 
