@@ -76,6 +76,37 @@
             </LinearLayout>
 
 
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Address"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:id="@+id/client_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="30dp"
+                    android:text="ad"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+
+
             <TextView
                 android:id="@+id/date"
                 android:layout_width="wrap_content"
@@ -89,7 +120,7 @@
                 android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/txt_his_address"
+                android:id="@+id/price_fee"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -100,27 +131,6 @@
                 android:text="address"
                 android:textStyle="bold"
                 android:textSize="18sp" />
-
-
-
-
-                <TextView
-                    android:id="@+id/price_fee"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="price"
-                    android:textSize="15sp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="4dp"
-                    />
-
-
-
-
-
 
 
 

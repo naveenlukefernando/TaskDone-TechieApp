@@ -28,7 +28,7 @@ import fr.ganfra.materialspinner.MaterialSpinner;
 
 public class activity_register_top_screen extends AppCompatActivity {
 
-    MaterialSpinner   spinner;
+    MaterialSpinner   spinnercity, spinnerprofession;
     List<String> listItems = new ArrayList<>();
     List<String> professionistItems = new ArrayList<>();
     ArrayAdapter <String> adapter;
@@ -50,19 +50,19 @@ public class activity_register_top_screen extends AppCompatActivity {
 
         initItems();
 
-        spinner = (MaterialSpinner) findViewById(R.id.spinner_city);
+        spinnercity = (MaterialSpinner) findViewById(R.id.spinner_city);
         adapter = new ArrayAdapter<String>(this ,R.layout.support_simple_spinner_dropdown_item,listItems);
         adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
+        spinnercity.setAdapter(adapter);
 
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinnercity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
 
                 if (position != -1) // plese choose will notify
                 {
                     position_text = position;
-                     selected_city =spinner.getItemAtPosition(position).toString();
+                     selected_city =spinnercity.getItemAtPosition(position).toString();
 
                     Log.d("Clicked",selected_city);
 
@@ -81,20 +81,20 @@ public class activity_register_top_screen extends AppCompatActivity {
 
         initItems_Cities();
 
-        spinner = (MaterialSpinner) findViewById(R.id.spinner_profession);
+        spinnerprofession = (MaterialSpinner) findViewById(R.id.spinner_profession);
         adapter = new ArrayAdapter<String>(this ,R.layout.support_simple_spinner_dropdown_item,professionistItems);
         adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
+        spinnerprofession.setAdapter(adapter);
 
 
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinnerprofession.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
 
                 if (position != -1) // plese choose will notify
                 {
 
-                    selected_profession =spinner.getItemAtPosition(position).toString();
+                    selected_profession =spinnerprofession.getItemAtPosition(position).toString();
 
                     Log.d("Clicked",selected_profession);
 
@@ -136,10 +136,10 @@ public class activity_register_top_screen extends AppCompatActivity {
                 intent.putExtra("nic",nic);
                 intent.putExtra("name",name);
                 intent.putExtra("city",selected_city);
+                intent.putExtra("profession",selected_profession);
 
 
                 startActivity(intent);
-                finish();
 
             }
         });

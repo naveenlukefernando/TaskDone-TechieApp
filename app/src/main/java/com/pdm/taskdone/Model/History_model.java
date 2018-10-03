@@ -3,9 +3,9 @@ package com.pdm.taskdone.Model;
 public class History_model {
 
     String workerId,WorkerName,WorkerProPic;
-    String time_duration,paid_fee,worker_city;
-    String clientId,clientName,description;
-    String type, rating,date;
+    String time_duration,paid_fee,address;
+    String clientId,client_name,description;
+    String rating,date;
 
 
 
@@ -13,30 +13,18 @@ public class History_model {
 
     }
 
-//    public History_model(String date,String workerId, String workerName, String workerProPic, String time_duration, String paid_fee, String worker_city, String clientId, String clientName, String description, String type, String rating) {
-//        this.workerId = workerId;
-//        this.WorkerName = workerName;
-//        this.WorkerProPic = workerProPic;
-//        this.time_duration = time_duration;
-//        this.paid_fee = paid_fee;
-//        this.date = date;
-//        this.worker_city = worker_city;
-//        this.clientId = clientId;
-//        this.clientName = clientName;
-//        this.description = description;
-//        this.type = type;
-//        this.rating = rating;
-//    }
 
+    public History_model(String description, String client_name, String address, String date, String paid_fee, String rating) {
 
-    public History_model(String paid_fee, String worker_city, String clientName, String description, String rating, String date) {
-        this.worker_city = worker_city;
-        this.clientName = clientName;
         this.description = description;
-        this.rating = rating;
+        this.client_name = client_name;
+        this.address = address;
         this.date = date;
         this.paid_fee = paid_fee;
+        this.rating = rating;
+
     }
+
 
     public String getPaid_fee() {
         return paid_fee;
@@ -46,20 +34,20 @@ public class History_model {
         this.paid_fee = paid_fee;
     }
 
-    public String getWorker_city() {
-        return worker_city;
+    public String getAddress() {
+        return address;
     }
 
-    public void setWorker_city(String worker_city) {
-        this.worker_city = worker_city;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public String getClientName() {
-        return clientName;
+    public String getClient_name() {
+        return client_name;
     }
 
-    public void setClientName(String clientName) {
-        this.clientName = clientName;
+    public void setClient_name(String client_name) {
+        this.client_name = client_name;
     }
 
     public String getDescription() {
@@ -69,6 +57,8 @@ public class History_model {
     public void setDescription(String description) {
         this.description = description;
     }
+
+
 
     public String getRating() {
         return rating;

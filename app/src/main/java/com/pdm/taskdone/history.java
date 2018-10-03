@@ -1,5 +1,6 @@
 package com.pdm.taskdone;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -79,12 +81,14 @@ public class history extends AppCompatActivity {
 
 
                         return new History_model(
-                                    snapshot.child("worker_city").getValue().toString()
-                                ,snapshot.child("paid_fee").getValue().toString()
+                                snapshot.child("description").getValue().toString()
                                 , snapshot.child("client_name").getValue().toString()
-                                , snapshot.child("description").getValue().toString()
-                                , snapshot.child("rating").getValue().toString()
-                                , snapshot.child("date").getValue().toString());
+                                ,snapshot.child("address").getValue().toString()
+                                , snapshot.child("date").getValue().toString()
+                                ,snapshot.child("paid_fee").getValue().toString()
+                                , snapshot.child("rating").getValue().toString());
+
+
 
 
                     }
@@ -95,13 +99,13 @@ public class history extends AppCompatActivity {
 
 
             @Override
-            protected void onBindViewHolder(ViewHolder holder, final int  position, final History_model model) {
+            protected void onBindViewHolder(ViewHolder holder, final int  position,  History_model model) {
 
                 holder.setTxttaskName(model.getDescription());
-                holder.setClientName(model.getClientName());
+               holder.setClientName(model.getClient_name());
                 holder.setDatedetail(model.getDate());
-                holder.setAddress(model.getWorker_city());
-                holder.setRating(Float.parseFloat(model.getRating()));
+                holder.setAddress(model.getAddress());
+               holder.setRating(Float.parseFloat(model.getRating()));
                 holder.setPrice(model.getPaid_fee());
 
 
@@ -132,6 +136,10 @@ public class history extends AppCompatActivity {
 
 
 
+
+
+
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -155,7 +163,7 @@ public class history extends AppCompatActivity {
         public TextView task_name;
         public TextView clientName;
         public TextView date;
-        public TextView address;
+        public TextView clientAddress;
         public RatingBar rating;
         public TextView Textfee;
 
@@ -167,9 +175,9 @@ public class history extends AppCompatActivity {
             task_name = itemView.findViewById(R.id.taskName);
             clientName = itemView.findViewById(R.id.cleintName);
             date = itemView.findViewById(R.id.date);
-            address = itemView.findViewById(R.id.txt_his_address);
             rating = itemView.findViewById(R.id.history_rating);
             Textfee = itemView.findViewById(R.id.price_fee);
+            clientAddress = itemView.findViewById(R.id.client_address);
 
 
         }
@@ -188,7 +196,7 @@ public class history extends AppCompatActivity {
         }
 
         public void setAddress (String string){
-            address.setText(string);
+            clientAddress.setText(string);
         }
 
         public void setRating (float rate){

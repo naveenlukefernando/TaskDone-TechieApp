@@ -73,6 +73,7 @@ public class activity_register_new_screen extends AppCompatActivity {
          nic = getIntent().getExtras().getString("nic");
          city = getIntent().getExtras().getString("city");
          name = getIntent().getExtras().getString("name");
+        selected_profession= getIntent().getExtras().getString("profession");
 
         //button
          reg_done_btn= findViewById(R.id.reg_done_btn);

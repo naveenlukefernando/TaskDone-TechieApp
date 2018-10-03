@@ -57,7 +57,7 @@ public class finished_task extends AppCompatActivity {
     IGoogleAPI mService;
     IFCMService mFCMService;
 
-    String TokenClientID, clientId ,timeDuration ,clientName;
+    String TokenClientID, clientId ,timeDuration ,clientName,clientAddress;
 
 
     @Override
@@ -95,6 +95,7 @@ public class finished_task extends AppCompatActivity {
 
                         client_model c_model = snapshot.getValue(client_model.class);
                         clientName = c_model.getName();
+                        clientAddress = c_model.getAddress();
                         Log.d("GOT IT", " "+clientName);
 
                     }
@@ -151,8 +152,8 @@ public class finished_task extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-            if (!validateTotal ())
-            {return;}
+                if (!validateTotal()){return;}
+
 
                 String worker_type_amount = worker_amount.getText().toString();
                 double worker_rate = Double.parseDouble(worker_type_amount);
@@ -181,7 +182,9 @@ public class finished_task extends AppCompatActivity {
                         Toast.makeText(finished_task.this, "Total " + worker_full_amount, Toast.LENGTH_SHORT).show();
                         Log.d("send", "Recipt sent " + worker_full_amount);
 
-
+                    Intent intent = new Intent(finished_task.this,TaskDone.class);
+                    startActivity(intent);
+                    finish();
 
 
             }
@@ -273,6 +276,7 @@ public class finished_task extends AppCompatActivity {
         map.put ("worker_city",Common.currentUser.getCity());
         map.put("clientId",clientId);
         map.put("client_name",clientName);
+        map.put("address",clientAddress);
         map.put("description",desc);
         map.put("type",Common.currentUser.getProfession());
         map.put("rating",0);

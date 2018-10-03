@@ -9,13 +9,14 @@
 
 
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="20dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -41,202 +42,189 @@
 
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="wrap_content"
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="1dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginLeft="1dp"
-        android:layout_marginRight="1dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="70dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/layer_style"
         android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/linearLayout2"
+        app:layout_constraintVertical_bias="0.41000003">
+
+
+        <!-- lastname/>-->
+
+
+        <!-- e-mail/>-->
+        <android.support.design.widget.TextInputLayout
+
+            android:id="@+id/textInput_Layer_Email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="17dp"
+            android:layout_marginRight="17dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="25sp"
+            app:errorEnabled="true"
+            app:layout_constraintBottom_toTopOf="@+id/textInputLayout2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/e-mail_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="E-mail"
+                android:inputType="textEmailAddress"
+                android:textColor="@color/black"
+
+                android:textSize="14sp">
+
+
+            </android.support.design.widget.TextInputEditText>
+
+
+        </android.support.design.widget.TextInputLayout>
+
+        <!--passsword-->
+        <android.support.design.widget.TextInputLayout
+
+            android:id="@+id/textInput_Layer_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="17dp"
+            android:layout_marginRight="17dp"
+            android:layout_marginStart="8dp"
+            app:errorEnabled="true"
+            app:layout_constraintBottom_toTopOf="@+id/retype_password_layout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:passwordToggleEnabled="true">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/password_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:textColor="@color/black"
+
+                android:textSize="14sp">
+
+
+            </android.support.design.widget.TextInputEditText>
+
+
+        </android.support.design.widget.TextInputLayout>
+
+
+        <android.support.design.widget.TextInputLayout
+
+            android:id="@+id/Textinput_Layer_retype_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="17dp"
+            android:layout_marginRight="17dp"
+
+            android:layout_marginStart="8dp"
+            app:errorEnabled="true"
+            app:layout_constraintBottom_toTopOf="@+id/reg_done_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:passwordToggleEnabled="true">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/retype_password_textbox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Retype Password"
+                android:inputType="textPassword"
+                android:textColor="@color/black"
+
+                android:textSize="14sp">
+
+
+            </android.support.design.widget.TextInputEditText>
+
+
+        </android.support.design.widget.TextInputLayout>
+
+
+        <android.support.design.widget.TextInputLayout
+
+            android:id="@+id/textInput_Layer_Phone_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="25dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="17dp"
+            android:layout_marginRight="17dp"
+            android:layout_marginStart="8dp"
+            app:errorEnabled="true"
+            app:layout_constraintBottom_toTopOf="@+id/textInputLayout3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/text_phone_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Phone Number"
+                android:inputType="phone"
+                android:textColor="@color/black"
+                android:textSize="14sp">
+
+
+            </android.support.design.widget.TextInputEditText>
+
+
+        </android.support.design.widget.TextInputLayout>
+
+
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/button_register"
+        android:onClick="reg_done_click"
+        android:text="Register"
+        android:textColor="@color/white"
+        android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.53">
-
-
-        <LinearLayout
-            android:id="@+id/linearLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="1dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginStart="20dp"
-            android:background="@drawable/layer_style"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.49"
-            app:layout_constraintStart_toStartOf="parent">
-
-
-            <!-- lastname/>-->
-
-
-            <!-- e-mail/>-->
-            <android.support.design.widget.TextInputLayout
-
-                android:id="@+id/textInput_Layer_Email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginLeft="17dp"
-                android:layout_marginRight="17dp"
-                android:layout_marginStart="8dp"
-                app:errorEnabled="true"
-                app:layout_constraintBottom_toTopOf="@+id/textInputLayout2"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent">
-
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/e-mail_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="E-mail"
-                    android:inputType="textEmailAddress"
-                    android:textColor="@color/black"
-
-                    android:textSize="14sp">
-
-
-                </android.support.design.widget.TextInputEditText>
-
-
-            </android.support.design.widget.TextInputLayout>
-
-            <!--passsword-->
-            <android.support.design.widget.TextInputLayout
-
-                android:id="@+id/textInput_Layer_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginLeft="17dp"
-                android:layout_marginRight="17dp"
-                android:layout_marginStart="8dp"
-                app:errorEnabled="true"
-                app:layout_constraintBottom_toTopOf="@+id/retype_password_layout"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:passwordToggleEnabled="true">
-
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/password_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Password"
-                    android:inputType="textPassword"
-                    android:textColor="@color/black"
-
-                    android:textSize="14sp">
-
-
-                </android.support.design.widget.TextInputEditText>
-
-
-            </android.support.design.widget.TextInputLayout>
+        app:layout_constraintVertical_bias="1.0" />
 
 
 
-            <android.support.design.widget.TextInputLayout
 
-                android:id="@+id/Textinput_Layer_retype_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginLeft="17dp"
-                android:layout_marginRight="17dp"
-
-                android:layout_marginStart="8dp"
-                app:errorEnabled="true"
-                app:layout_constraintBottom_toTopOf="@+id/reg_done_btn"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:passwordToggleEnabled="true">
-
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/retype_password_textbox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Retype Password"
-                    android:inputType="textPassword"
-                    android:textColor="@color/black"
-
-                    android:textSize="14sp">
-
-
-                </android.support.design.widget.TextInputEditText>
-
-
-            </android.support.design.widget.TextInputLayout>
-
-
-            <android.support.design.widget.TextInputLayout
-
-                android:id="@+id/textInput_Layer_Phone_number"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginLeft="17dp"
-                android:layout_marginRight="17dp"
-                android:layout_marginStart="8dp"
-                app:errorEnabled="true"
-                app:layout_constraintBottom_toTopOf="@+id/textInputLayout3"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent">
-
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/text_phone_number"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Phone Number"
-                    android:inputType="phone"
-                    android:textColor="@color/black"
-
-                    android:textSize="14sp">
-
-
-                </android.support.design.widget.TextInputEditText>
-
-
-            </android.support.design.widget.TextInputLayout>
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="20dp"
-            android:orientation="vertical">
-
-            <Button
-                android:layout_width="100dp"
-                android:layout_height="40dp"
-                android:layout_marginLeft="100dp"
-                android:layout_marginRight="100dp"
-                android:background="@drawable/button_register"
-                android:onClick="reg_done_click"
-                android:text="Register"
-                android:textColor="@color/white"
-                android:textSize="10sp"
-
-                />
-
-
-        </LinearLayout>
-
-    </LinearLayout>
 
 
 
