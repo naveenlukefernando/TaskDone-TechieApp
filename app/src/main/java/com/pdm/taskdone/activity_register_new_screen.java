@@ -30,6 +30,8 @@ import com.pdm.taskdone.Model.User_worker;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import dmax.dialog.SpotsDialog;
 import fr.ganfra.materialspinner.MaterialSpinner;
@@ -102,7 +104,7 @@ public class activity_register_new_screen extends AppCompatActivity {
 
     public void  reg_done_click (View v){
 
-        if(!validateEmail () | !validatePhone () |  !validatePassword () | !validate_Re_Password ()) {
+        if(!validateEmail () |!validateEmailPattern () | !validatePhone () |  !validatePassword () | !validate_Re_Password ()) {
             return;
         }
 
@@ -129,6 +131,7 @@ public class activity_register_new_screen extends AppCompatActivity {
                             user.setPro_pic_URL(pro_Pic_url);
                             user.setCity(city);
                             user.setName(name);
+                            user.setRate("1.0");
                             user.setEmail(email.getText().toString());
                             user.setPassword(password.getText().toString());
                             user.setPhone(phone.getText().toString());
@@ -240,6 +243,32 @@ public class activity_register_new_screen extends AppCompatActivity {
         }
 
     }
+
+
+
+    private boolean validateEmailPattern ()
+    {
+
+        String text = email_lay.getEditText().getText().toString().trim();
+
+        String validemail = "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +"\\@" +"[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +"(" +"\\." +"[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +")+";
+
+        Matcher matcher= Pattern.compile(validemail).matcher(text);
+
+
+
+        if (matcher.matches()){
+           return  true;
+
+
+        }
+        else
+            email_lay.setError("Invalid E-mail.");
+
+            return false;
+
+    }
+
 
     private boolean validatePhone ()
     {

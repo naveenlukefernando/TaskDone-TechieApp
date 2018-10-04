@@ -13,11 +13,12 @@ public class User_worker {
     private String NIC;
     private String profession;
     private String pro_pic_URL;
+    private String rate;
 
     public User_worker() {
     }
 
-    public User_worker(String id,String email, String password, String name, String phone , String city ,String NIC,String pro_pic_URL, String profession) {
+    public User_worker(String id,String email, String password, String name, String phone , String city ,String NIC,String pro_pic_URL, String profession,String rate) {
         this.id = id;
         this.email = email;
         this.password = password;
@@ -27,6 +28,7 @@ public class User_worker {
         this.NIC = NIC;
         this.profession = profession;
         this.pro_pic_URL = pro_pic_URL;
+        this.rate = rate;
     }
 
     public String getId() {
@@ -101,5 +103,13 @@ public class User_worker {
 
     public void setPro_pic_URL(String pro_pic_URL) {
         this.pro_pic_URL = pro_pic_URL;
+    }
+
+    public String getRate() {
+        return rate;
+    }
+
+    public void setRate(String rate) {
+        this.rate = rate;
     }
 }

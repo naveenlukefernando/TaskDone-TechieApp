@@ -23,6 +23,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.pdm.taskdone.Common.Common;
 import com.pdm.taskdone.Model.User_worker;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import dmax.dialog.SpotsDialog;
 import io.paperdb.Paper;
 
@@ -67,7 +70,7 @@ public class sign_in_up_screen extends AppCompatActivity {
     //  login_attepmt
     public void log_click (View v)
     {
-        if (!validateEmail() | !validatePassword()){
+        if (!validateEmail() | !validatePassword() | !validateEmailPattern () ){
             return;
         }
 
@@ -117,6 +120,28 @@ public class sign_in_up_screen extends AppCompatActivity {
                         Toast.LENGTH_LONG).show();
             }
         });
+
+    }
+
+    private boolean validateEmailPattern() {
+
+        String text = text_layer_Email.getEditText().getText().toString().trim();
+
+        String validemail = "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +"\\@" +"[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +"(" +"\\." +"[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +")+";
+
+        Matcher matcher= Pattern.compile(validemail).matcher(text);
+
+
+
+        if (matcher.matches()){
+            return  true;
+
+
+        }
+        else
+            text_layer_Email.setError("Invalid E-mail.");
+
+        return false;
 
     }
 
