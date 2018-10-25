@@ -20,4 +20,4 @@ We have provided a simple and quick solution for customers to locate service pro
 • Flexible Payments
   - Online payment or cash
   
-  ![](https://github.com/naveenlukefernando/TaskDone-TechieApp/blob/master/screenshots/screenshotws.png)
+  ![](https://github.com/naveenlukefernando/TaskDone-TechieApp/blob/master/screenshots/sasada.jpg)
