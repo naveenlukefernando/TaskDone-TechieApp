@@ -173,7 +173,7 @@ public class activity_register_top_screen extends AppCompatActivity {
     private void initItems_Cities() {
 
 
-        String[] profession = {"Electrician","A/C Technician","Carpenters","Painters","Welding"};
+        String[] profession = {"electrician","a/c technician","carpenters","painters","welding"};
 
 
 
